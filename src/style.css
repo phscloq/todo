@@ -1,0 +1,164 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.content{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 200px 2fr;
+    grid-template-rows: 100px 1fr;
+    background-color: bisque;
+}
+
+/*Sidepanel CSS*/
+nav{
+    background-color: rgb(197, 197, 197);
+   grid-row: 2/3;
+   grid-column: 1/2;
+ 
+}
+#sidebar-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 50px auto;
+    width: 180px;
+    padding-left: 20px;
+   font-size: 1.5rem;
+   
+}
+nav li{
+   
+    margin: 10px 10px 10px;
+    list-style: none;
+}
+.nav-item:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+.project:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+/*END of Sidepanel CSS*/
+
+/*topbar css*/
+header{
+    background-color: rgb(245, 186, 186);
+   grid-column: 1/3;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+header div{
+    margin: 0 20px;
+}
+header div button{
+    margin: auto 20px;
+}
+
+.topbar-user{
+    display: flex;
+    align-items:flex-end;
+}
+/*end of TOPBAR css*/
+
+
+
+/*main content css*/
+#section-title{
+    text-transform: capitalize;
+}
+.taskAddBtn{
+    font-size: 1.95rem;
+    color: black;
+    padding: 0px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+/*end of main content css*/
+/*form style*/
+.formDiv{
+   display: none;
+   align-items: center;
+   justify-content: center;
+   position:fixed;
+   z-index: 2;
+   top: 0;
+   height: 100vh;
+   width: 100vw;
+   backdrop-filter: blur(5px);
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    height: 300px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+}
+.taskContent{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
+}
+.taskContent textarea{
+    resize: none;
+    border: none;
+}
+.taskContent .taskName{
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+.taskContent .taskDescription{
+    height: 5rem;
+    margin-bottom: 2rem;
+}
+.taskContent input{
+    width: fit-content;
+}
+.taskContent select{
+    width: 70px;
+}
+form div button{
+    margin: 0 10px;
+    font-size: 2rem;
+    border: 2px solid red;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.formBtnAdd{
+  
+
+   
+
+  
+    content: "O";
+    
+}
+.formBtnCancel{
+
+    content: "X";
+}
+
+.task{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+/*end of form style*/
