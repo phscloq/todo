@@ -1,5 +1,6 @@
 import { Todo, Project } from "../classes";
 import { hideForm } from "../buttons";
+import { handleTaskSubmit } from "../functions";
 let i=0;
 export default function pageLoad(){
 const body = document.querySelector('body');
@@ -41,14 +42,12 @@ const upcoming = document.createElement('li');
 const projects = document.createElement('li');
 const projectsSectionTitle = document.createElement('div');
 const projectsList = document.createElement('ul');
-const study = document.createElement('li');
-const work = document.createElement('li');
 
-/* projectsList.append(study, work); */
+
 projects.append(projectsSectionTitle, projectsList);
 navlist.append(home, today, upcoming, projects);
-sidebarContent.appendChild(navlist);
-sidebar.appendChild(sidebarContent);
+
+
 projectsList.setAttribute('id', 'projects-list');
 sidebar.setAttribute('id', 'sidebar');
 sidebarContent.setAttribute('id', 'sidebar-container');
@@ -65,20 +64,26 @@ home.textContent = 'Home';
 today.textContent = 'Today';
 upcoming.textContent = 'Upcoming';
 projectsSectionTitle.textContent = 'Projects';
+//Sidebar New Project Form
+const newProjectFormDiv = document.createElement('div');
+const newProjectForm = document.createElement('form');
+const projectName = document.createElement('input');
+const projectFrmBtns = document.createElement('div');
+const projectSubmit = document.createElement('button');
+projectSubmit.textContent = 'Add';
+projectName.setAttribute('placeholder', 'New Project Name');
+projectSubmit.setAttribute('id', 'projectSubmit');
+newProjectFormDiv.classList.add('newProjectFormDiv');
+newProjectForm.classList.add('newProjectForm');
+newProjectForm.setAttribute('id', 'newProjectForm');
+projectName.setAttribute('id', 'projectName');
+projectFrmBtns.classList.add('projectFrmBtns');
 
-//creating projects
-study.setAttribute('id', 'study');
-work.setAttribute('id', 'work');
-study.classList.add('project');
-work.classList.add('project');
-
-study.textContent = 'Study';
-work.textContent = 'Work';
-
-
-
-
-
+projectFrmBtns.appendChild(projectSubmit);
+newProjectForm.append(projectName,projectFrmBtns);
+newProjectFormDiv.appendChild(newProjectForm);
+sidebarContent.append(navlist, newProjectFormDiv);
+sidebar.appendChild(sidebarContent);
 
 
 
@@ -101,32 +106,39 @@ contentContainer.append(sectionTitle, taskContainer);
 mainSection.appendChild(contentContainer);
 
 
-//form for adding a new task
+//******* FORM ADDING NEW TASK********
 const formDiv = document.createElement('div');
 const form = document.createElement('form');
+/* form.setAttribute('onsubmit', 'handleTaskSubmit(event)') */
 const formInputs = document.createElement('div');
 const formButtons = document.createElement('div');
 const taskName = document.createElement('textarea');
 taskName.classList.add('taskName');
+taskName.setAttribute('id', 'taskName');
 const taskDescription = document.createElement('textarea');
 taskDescription.classList.add('taskDescription');
+taskDescription.setAttribute('id', 'taskDescription');
 const taskDueDate = document.createElement('input');
 taskDueDate.setAttribute('type', 'date');
 const taskPriority = document.createElement('select');
-const taskProject = document.createElement('select');
+/* const taskProject = document.createElement('select');
+taskProject.setAttribute('id', 'taskProject'); */
 const taskSubmit = document.createElement('button');
 const taskCancel = document.createElement('button');
 const taskP1 = document.createElement('option');
 const taskP2 = document.createElement('option');
 const taskP3 = document.createElement('option');
-const taskProjectOption1 = document.createElement('option');
-const taskProjectOption2 = document.createElement('option');
+
 taskSubmit.classList.add('formBtnAdd');
 taskSubmit.setAttribute('id', 'formBtnAdd');
+taskSubmit.setAttribute('type', 'button');
 taskCancel.setAttribute('id', 'formBtnCancel');
 
 taskCancel.classList.add('formBtnCancel');
+taskDueDate.setAttribute('id', 'taskDueDate');
+taskPriority.setAttribute('id', 'taskPriority');
 formDiv.classList.add('formDiv');
+form.setAttribute('id', 'task-form');
 formDiv.setAttribute('id', 'formDiv');
 formInputs.classList.add('taskContent');
 taskSubmit.textContent = 'O';
@@ -137,12 +149,8 @@ taskP3.textContent = 'High';
 taskName.placeholder = 'What do you need to do?';
 taskDescription.placeholder = 'Description';
 
-taskProjectOption1.textContent = 'Study';
-taskProjectOption2.textContent = 'Work';
-
-taskProject.append(taskProjectOption1, taskProjectOption2);
 taskPriority.append(taskP1, taskP2, taskP3);
-formInputs.append(taskName, taskDescription, taskDueDate, taskPriority, taskProject);
+formInputs.append(taskName, taskDescription, taskDueDate, taskPriority/* , taskProject */);
 formButtons.append(taskSubmit, taskCancel);
 form.append(formInputs, formButtons);
 formDiv.appendChild(form);
