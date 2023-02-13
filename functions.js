@@ -71,14 +71,14 @@ console.log(Project.projects);
 
 let i=0;
 function displayProject(project){
-    const projectHTML = `<li class="project" id="${project.name}" value="${i}">${project.name}<div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
+    const projectHTML = `<li class="project" id="${project.name}" value="${i}">${project.name}<div class="projectEdit" id="projectEdit"><button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div><div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
     i++;
   
     document.querySelector('#projects-list').insertAdjacentHTML('beforeend', projectHTML);
 
  }
 function newProject(project){
-    const projectHTML = `<li class="project" id="${project.name}" value="${project.id}">${project.name}<div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
+    const projectHTML = `<li class="project" id="${project.name}" value="${project.id}">${project.name}<div class="projectEdit" id="projectEdit"><button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div><div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
     document.querySelector('#projects-list').insertAdjacentHTML('beforeend', projectHTML);
     document.getElementById('section-title').textContent = project.name;
     document.querySelector('#task-container').innerHTML = '';
@@ -107,4 +107,17 @@ function taskNumbers(project){
 document.getElementById(`${project.name}`).childNodes[1].childNodes[1].textContent = `${project.todos.length}`;
 }
 
-export { displayContent, displayProject, updateContent, homeTab, newProject, taskNumbers};
+function deleteProject(project){
+   console.log(project.value);
+    Project.projects.splice(project.value, 1);
+    console.log(Project.projects);
+    localStorageUpdate();
+}
+function localStorageUpdate(){
+    localStorage.setItem('projects', JSON.stringify(Project.projects));
+}
+function projectEdit(e){
+    const editDiv = `<div class="projectSettings" id="projectSettings"><button class="deleteBtn" id="deleteBtn">Delete</button><button class="editBtn" id="editBtn">Edit</button></div>`;
+    e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
+}
+export { displayContent, displayProject, updateContent, homeTab, newProject, taskNumbers, deleteProject,projectEdit};

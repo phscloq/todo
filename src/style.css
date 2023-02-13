@@ -25,8 +25,9 @@ nav{
     width: 180px;
     padding-left: 20px;
    font-size: 1.5rem;
-   
+ 
 }
+
 nav li{
    
     margin: 10px 10px 10px;
@@ -42,15 +43,34 @@ nav li{
     justify-content: space-between;
 }
 .project:hover{
-    color: rgb(255, 255, 255);
-    background-color: rgb(255, 0, 0);
+    text-transform: uppercase;
     cursor: pointer;
+}
+.project:hover > .projectEdit{
+    display: flex;
+    align-items: center;
+}
+.project:hover > .taskNumbers{
+    display: none;
 }
 .taskNumbers{
     font-size: 18px;
-    display: flex;
+    display: none;
     align-items: flex-end;
 }
+.projectEdit{
+    display: block;
+}
+.settingsBtn{
+    border: none;
+    background-color: transparent;
+   
+}
+.editTxt{
+    font-size: 22px;
+    font-weight: bold;
+}
+
 /*New Project Form*/
 
 .newProjectForm{
@@ -65,7 +85,33 @@ height: 28px;
 }
 
 /* End of New Project Form*/
+/*Project Settings*/
+.projectSettings{
+    display: grid;
+    position: absolute;
+    z-index: 2;
+    margin-top: 31px;
+    margin-left: 16px;
+    /*make it on right side inside the container*/
+    width: 136px;
+    height: 67px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
 
+  
+}
+.projectSettings button{
+    border: none;
+    background-color: transparent;
+    font-size: 1.1rem;
+}
+.projectSettings button:hover{
+    background-color: rgb(229, 229, 229);
+}
+/*Project Settings END*/
 /*END of Sidepanel CSS*/
 
 /*topbar css*/

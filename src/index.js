@@ -2,10 +2,11 @@ console.log("Working!");
 import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
-import { displayContent, displayProject, homeTab, updateContent, newProject, taskNumbers} from "../functions";
+import { displayContent, displayProject, homeTab, updateContent, newProject, taskNumbers, deleteProject, projectEdit} from "../functions";
+import { format } from "date-fns";
 
 pageLoad();
-
+console.log(format(new Date(), "'Today is a' eeee"));
 
 //
 const home = document.getElementById('home');
@@ -38,6 +39,7 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
     console.log(event.target.id);
     sectionTitle.textContent = event.target.id;
     displayContent(event.target);
+    deleteProject(event.target);
   }
 });
                 //******************FORM ADDEDVENTLISTENERS********************
@@ -90,4 +92,21 @@ document.getElementById('projectSubmit').addEventListener('click', (event)=>{
     newProject(project);
    
   
+});
+
+document.querySelectorAll('.projectEdit').forEach((element)=>{
+element.addEventListener('click', (event)=>{
+
+    if(!document.querySelector('.projectSettings')){
+    
+        projectEdit(event.target);}
+    
+});
+});
+document.querySelector('.content').addEventListener('click', (event)=>{
+
+   if(!event.target.closest('.projectSettings') && !event.target.closest('.projectEdit')){
+    if(document.querySelector('.projectSettings')){
+     document.querySelector('.projectSettings').remove();
+   }}
 });
