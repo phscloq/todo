@@ -2,7 +2,7 @@ console.log("Working!");
 import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
-import { displayContent, displayProject, homeTab, updateContent, newProject, taskNumbers, deleteProject, projectEdit} from "../functions";
+import { displayContent, showForm, homeTab, updateContent, newProject, taskNumbers, deleteProject, projectEdit, deleteTask} from "../functions";
 import { format } from "date-fns";
 
 pageLoad();
@@ -33,16 +33,24 @@ upcoming.addEventListener('click', () => {
     document.querySelector('#task-container').innerHTML ='';    
 });
 
-//******************PROJECT ADDEDVENTLISTENERS********************
+//*******PROJECT ADDEDVENTLISTENERS*******
 document.getElementById('projects-list').addEventListener('click', (event) => {
   if (event.target.classList.contains('project')) {
     console.log(event.target.id);
     sectionTitle.textContent = event.target.id;
-    displayContent(event.target);
-    deleteProject(event.target);
+    const {tasksHTML, taskAddHtml}= displayContent(event.target);
+    document.querySelector('#task-container').innerHTML = tasksHTML;
+   document.querySelector('#task-container').appendChild(taskAddHtml);
+   
+  }
+ if (event.target.classList.contains('projectSettings')){
+    console.log(event.target);
+  }
+  if(event.target.id === 'deletePrjBtn'){
+    deleteProject(event.target.parentNode.parentNode);
   }
 });
-                //******************FORM ADDEDVENTLISTENERS********************
+                //*******FORM ADDEDVENTLISTENERS*******
 //Cancel Button
 document.getElementById('formBtnCancel').addEventListener('click', (e) => {
     e.preventDefault();
@@ -109,4 +117,22 @@ document.querySelector('.content').addEventListener('click', (event)=>{
     if(document.querySelector('.projectSettings')){
      document.querySelector('.projectSettings').remove();
    }}
+});
+/* 
+document.querySelector('.taskAddBtn').addEventListener('click', (event)=>{
+    event.preventDefault();
+    showForm(event.target);
+   
+}); */
+document.getElementById('task-container').addEventListener('click', (event)=>{
+    if(event.target.classList.contains('task')){
+     
+        console.log(event.target.parentNode);
+        const taskArray = event.target.parentNode.childNodes;
+        const taskIndex = Array.from(taskArray).indexOf(event.target);
+       
+  
+        const index = Project.projects.findIndex(project => project.name === sectionTitle.textContent);
+        deleteTask(index, taskIndex);
+    }
 });

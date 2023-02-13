@@ -55,11 +55,11 @@ nav li{
 }
 .taskNumbers{
     font-size: 18px;
-    display: none;
+    display: flex;
     align-items: flex-end;
 }
 .projectEdit{
-    display: block;
+    display: none;
 }
 .settingsBtn{
     border: none;
@@ -138,9 +138,9 @@ header div button{
 
 
 /*main content css*/
-#section-title{
+/* #section-title{
     text-transform: capitalize;
-}
+} */
 .taskAddBtn{
     font-size: 1.95rem;
     color: black;
