@@ -231,4 +231,15 @@ header div button{
     border: 1px solid black;
     border-radius: 5px;
 }
+.task:hover > .taskR > .taskSettings{
+    display: flex;
+}
+
 /*end of form style*/
+.taskR{
+    display: flex;
+}
+.taskSettings{
+    display: none;
+    margin-left: 10px;
+}

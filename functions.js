@@ -20,9 +20,11 @@ function displayContent(project){
     console.log(Project.projects);
     console.log(Project.projects[projectId]);
    const tasksHTML = Project.projects[projectId].todos.map(todo => `<div class="task">
-   <div class="task_title">${todo.title}</div>
+   <div class="task_title">${todo.title}</div><div class="taskR">
    <div class="task_date">${todo.dueDate}</div>
-   </div>`).join('');
+   <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
+   
+   </div></div>`).join('');
  
    const taskAddHtml = document.createElement('div');
    taskAddHtml.classList.add('taskAdd');
@@ -46,7 +48,7 @@ function displayContent(project){
     const projectId = document.getElementById(project).value;
     const tasksHTML = Project.projects[projectId].todos.map(todo => `<div class="task">
     <div class="task_title">${todo.title}</div>
-    <div class="task_date">${todo.dueDate}</div>
+    <div class="task_date">${todo.dueDate}</div><div class="taskSet" id="taskSet"><button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div>
     </div>`).join('');
  /*    const taskAddBtn = `<div class="taskAdd"><button onclick="showForm()" class="taskAddBtn" id="taskAddBtn" value="${projectId}">New Task</button></div>`;
     
@@ -88,6 +90,13 @@ function newProject(project){
     const {tasksHTML, taskAddHtml}=displayContent(project.id);
     document.querySelector('#task-container').innerHTML = tasksHTML;
     document.querySelector('#task-container').appendChild(taskAddHtml);
+    document.querySelectorAll('.projectEdit').forEach((element)=>{
+        element.addEventListener('click', (event)=>{
+            if(!document.querySelector('.projectSettings')){
+                projectEdit(event.target);
+            }
+        });
+    });
 }
 
  
@@ -113,9 +122,12 @@ function deleteProject(project){
     console.log(Project.projects);
     localStorageUpdate();
     document.getElementById(project.id).remove();
-    
-    const {tasksHTML, taskAddHtml}= displayContent(index);
-    document.querySelector('#section-title').textContent = Project.projects[index].name;
+    let y=index;
+    if(index!=0){
+    y=index-1;
+    } 
+    const {tasksHTML, taskAddHtml}= displayContent(y);
+    document.querySelector('#section-title').textContent = Project.projects[y].name;
     document.querySelector('#task-container').innerHTML = tasksHTML;
     document.querySelector('#task-container').appendChild(taskAddHtml);
 }
@@ -132,7 +144,11 @@ function localStorageUpdate(){
     localStorage.setItem('projects', JSON.stringify(Project.projects));
 }
 function projectEdit(e){
+    console.log(e);
     const editDiv = `<div class="projectSettings" id="projectSettings"><button class="deleteBtn" id="deletePrjBtn">Delete</button><button class="editBtn" id="editPrjBtn">Edit</button></div>`;
     e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
+}
+function taskEdit(e){
+    const editDiv = `<div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>`
 }
 export { displayContent, displayProject, updateContent, homeTab, newProject, taskNumbers, deleteProject, deleteTask,projectEdit, showForm};

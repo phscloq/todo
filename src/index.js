@@ -49,6 +49,7 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
   if(event.target.id === 'deletePrjBtn'){
     deleteProject(event.target.parentNode.parentNode);
   }
+
 });
                 //*******FORM ADDEDVENTLISTENERS*******
 //Cancel Button
@@ -98,6 +99,7 @@ document.getElementById('projectSubmit').addEventListener('click', (event)=>{
     const project = new Project(projectName, `${Project.projects.length}`);
     localStorage.setItem('projects', JSON.stringify(Project.projects));
     newProject(project);
+    document.getElementById('projectName').value = "";
    
   
 });
