@@ -1,5 +1,11 @@
 import { Todo, Project } from "./classes";
 import { projectSetting } from "./opens";
+
+function showForm(){//onclick event for taskAddBtn
+  document.getElementById('formDiv').style.display = 'flex';
+      }
+
+
 let i=0;
 function displayProject(project){//This is for the initial load of the page, called in index.js
     const projectHTML = `<li class="project" id="${project.name}" value="${i}">${project.name}<div class="projectEdit" id="projectEdit"><button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div><div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;

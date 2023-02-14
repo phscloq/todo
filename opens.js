@@ -1,10 +1,6 @@
 //Description: This file contains the functions that are used to create/OPEN the forms for adding new tasks and projects and form to edit them.
 
 
-function showForm(){//onclick event for taskAddBtn
-    document.getElementById('formDiv').style.display = 'flex';
-        }
-
 
 function projectSetting(e){//onclick event for settingsBtn (...) for Project
 
@@ -12,4 +8,4 @@ function projectSetting(e){//onclick event for settingsBtn (...) for Project
             e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
         }
 
-export {projectSetting, showForm};
+export {projectSetting};
