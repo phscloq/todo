@@ -1,5 +1,5 @@
 //creating todo model
-import { displayProject } from "./functions.js";
+import { displayProject } from "./content";
 class Todo {
     constructor(title, description, dueDate, priority) {
         this.title = title;

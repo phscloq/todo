@@ -2,8 +2,10 @@ console.log("Working!");
 import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
-import { displayContent, showForm, homeTab, updateContent, newProject, taskNumbers, deleteProject, projectEdit, deleteTask} from "../functions";
+import {taskNumbers, deleteProject, deleteTask} from "../functions";
 import { format } from "date-fns";
+import {displayContent, homeTab, newProject} from "../content";
+import {projectSetting} from "../opens";
 
 pageLoad();
 console.log(format(new Date(), "'Today is a' eeee"));
@@ -84,8 +86,11 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
 
                         Project.projects[addTask.value].todos.push(task);
                         localStorage.setItem('projects', JSON.stringify(Project.projects));
-                        updateContent(projectName);
-                      
+                        const index = Project.projects.findIndex(x => x.name == projectName);
+                        const {tasksHTML, taskAddHtml}= displayContent(index);
+                        document.querySelector('#task-container').innerHTML = tasksHTML;
+                        document.querySelector('#task-container').appendChild(taskAddHtml);
+
                         document.getElementById('formDiv').style.display = 'none';
                         taskNumbers(Project.projects[addTask.value]);
 
@@ -109,7 +114,7 @@ element.addEventListener('click', (event)=>{
 
     if(!document.querySelector('.projectSettings')){
     
-        projectEdit(event.target);}
+        projectSetting(event.target);}
     
 });
 });
@@ -127,11 +132,12 @@ document.querySelector('.taskAddBtn').addEventListener('click', (event)=>{
    
 }); */
 document.getElementById('task-container').addEventListener('click', (event)=>{
-    if(event.target.classList.contains('task')){
+  
+    if(event.target.id === 'deleteTaskBtn'){
      
-        console.log(event.target.parentNode);
-        const taskArray = event.target.parentNode.childNodes;
-        const taskIndex = Array.from(taskArray).indexOf(event.target);
+        console.log(event.target.parentNode.parentNode.parentNode.parentNode);
+        const taskArray = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
+        const taskIndex = Array.from(taskArray).indexOf(event.target.parentNode.parentNode.parentNode);
        
   
         const index = Project.projects.findIndex(project => project.name === sectionTitle.textContent);

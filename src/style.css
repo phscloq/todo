@@ -7,15 +7,16 @@
     display: grid;
     grid-template-columns: 200px 2fr;
     grid-template-rows: 100px 1fr;
-    background-color: bisque;
+    background-color: rgb(210, 207, 207);
 }
 
 /*Sidepanel CSS*/
 nav{
-    background-color: rgb(197, 197, 197);
+    background-color: rgb(65, 65, 65);
    grid-row: 2/3;
    grid-column: 1/2;
- 
+   color: rgb(210, 207, 207);
+   border-right: 2px solid rgb(47,47,47);
 }
 #sidebar-container{
     display: flex;
@@ -60,6 +61,7 @@ nav li{
 }
 .projectEdit{
     display: none;
+ 
 }
 .settingsBtn{
     border: none;
@@ -69,6 +71,7 @@ nav li{
 .editTxt{
     font-size: 22px;
     font-weight: bold;
+    color: rgb(210, 207, 207);
 }
 
 /*New Project Form*/
@@ -116,11 +119,12 @@ height: 28px;
 
 /*topbar css*/
 header{
-    background-color: rgb(245, 186, 186);
+    background-color: rgb(47, 47, 47);
    grid-column: 1/3;
    display: flex;
    justify-content: space-between;
    align-items: center;
+   color: rgb(226, 224, 224);
 }
 header div{
     margin: 0 20px;
@@ -149,7 +153,36 @@ header div button{
     cursor: pointer;
 
 }
+#mainSection{
+    display: flex;
+    justify-content: center;
+    
+}
+#content-container{
+    width: 500px;
+}
+.task{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #eaeaea;
+}
+.task:hover > .taskR > .taskSettings{
+    display: flex;
+}
 
+/*end of form style*/
+.taskR{
+    display: flex;
+}
+.taskSettings{
+    display: none;
+    margin-left: 10px;
+}
 /*end of main content css*/
 /*form style*/
 .formDiv{
@@ -222,24 +255,3 @@ header div button{
     content: "X";
 }
 
-.task{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
-}
-.task:hover > .taskR > .taskSettings{
-    display: flex;
-}
-
-/*end of form style*/
-.taskR{
-    display: flex;
-}
-.taskSettings{
-    display: none;
-    margin-left: 10px;
-}
