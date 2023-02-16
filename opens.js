@@ -22,6 +22,7 @@ function taskEdit(e){//onclick event for editTaskBtn
         <option value="High">High</option>
         </select></div></form>
         </div>`;
+        console.log(e);
         //append it to body
         const body = document.querySelector('body');
         body.insertAdjacentHTML('beforeend', editDiv);

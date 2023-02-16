@@ -38,18 +38,23 @@ upcoming.addEventListener('click', () => {
 //*******PROJECT ADDEDVENTLISTENERS*******
 document.getElementById('projects-list').addEventListener('click', (event) => {
   if (event.target.classList.contains('project')) {
-    console.log(event.target.id);
+  
     sectionTitle.textContent = event.target.id;
-    const {tasksHTML, taskAddHtml}= displayContent(event.target);
+
+    const data = event.target.getAttribute('data');
+    const {tasksHTML, taskAddHtml}= displayContent(data);
     document.querySelector('#task-container').innerHTML = tasksHTML;
    document.querySelector('#task-container').appendChild(taskAddHtml);
    
   }
- if (event.target.classList.contains('projectSettings')){
+/*  if (event.target.classList.contains('projectSettings')){
     console.log(event.target);
-  }
+  } */
   if(event.target.id === 'deletePrjBtn'){
-    deleteProject(event.target.parentNode.parentNode);
+ 
+    const data = event.target.parentNode.parentNode.getAttribute('data');
+
+    deleteProject(data);
   }
 
 });
@@ -101,7 +106,7 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
 document.getElementById('projectSubmit').addEventListener('click', (event)=>{
     event.preventDefault();
     const projectName = document.getElementById('projectName').value;
-    const project = new Project(projectName, `${Project.projects.length}`);
+    const project = new Project(projectName, `${Project.projects.length}${projectName}`);
     localStorage.setItem('projects', JSON.stringify(Project.projects));
     newProject(project);
     document.getElementById('projectName').value = "";

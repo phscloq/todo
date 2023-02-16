@@ -8,17 +8,23 @@ function taskNumbers(project){
     }
     
     function deleteProject(project){
-
-        const index = Project.projects.findIndex(x => x.name == project.name);
+      /*   console.log(Project.projects);
+        console.log(Project.projects.findIndex(x => x.name == project.id)); */
+        const index = Project.projects.findIndex(x => x.id == project);
 
         Project.projects.splice(index, 1);
         console.log(Project.projects);
         localStorageUpdate();
-        document.getElementById(project.id).remove();
+        document.querySelector(`[data=${project}]`).remove();
+   
+        console.log("This is index:");
+        console.log(index);
         let y=index;
         if(index!=0){
         y=index-1;
         } 
+        console.log("This is y:");
+        console.log(y);
         const {tasksHTML, taskAddHtml}= displayContent(y);
         document.querySelector('#section-title').textContent = Project.projects[y].name;
         document.querySelector('#task-container').innerHTML = tasksHTML;
