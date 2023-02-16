@@ -8,7 +8,9 @@ function taskNumbers(project){
     }
     
     function deleteProject(project){
-       
+
+        const index = Project.projects.findIndex(x => x.name == project.name);
+
         Project.projects.splice(index, 1);
         console.log(Project.projects);
         localStorageUpdate();
@@ -35,5 +37,17 @@ function taskNumbers(project){
         localStorage.setItem('projects', JSON.stringify(Project.projects));
     }
     
+function taskComplete(e){
+console.log(e);
+//code for changing style of e
+if(!e.classList.contains('taskComplete')){
+e.classList.add('taskComplete');}
+else{
+    e.classList.remove('taskComplete');
+}
 
-export {taskNumbers, deleteProject, deleteTask};
+
+
+
+}
+export {taskNumbers, deleteProject, deleteTask, taskComplete};

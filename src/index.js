@@ -2,10 +2,10 @@ console.log("Working!");
 import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
-import {taskNumbers, deleteProject, deleteTask} from "../functions";
+import {taskNumbers, deleteProject, deleteTask, taskComplete} from "../functions";
 import { format } from "date-fns";
 import {displayContent, homeTab, newProject} from "../content";
-import {projectSetting} from "../opens";
+import {projectSetting, taskEdit} from "../opens";
 
 pageLoad();
 console.log(format(new Date(), "'Today is a' eeee"));
@@ -143,4 +143,13 @@ document.getElementById('task-container').addEventListener('click', (event)=>{
         const index = Project.projects.findIndex(project => project.name === sectionTitle.textContent);
         deleteTask(index, taskIndex);
     }
+if(event.target.classList.contains('task')){
+taskComplete(event.target);
+}
+
+    if(event.target.id === 'editTaskBtn'){
+        event.preventDefault();
+        taskEdit(event.target);
+    }
 });
+

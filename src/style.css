@@ -12,11 +12,11 @@
 
 /*Sidepanel CSS*/
 nav{
-    background-color: rgb(65, 65, 65);
+    background-color: rgb(135, 135, 135);
    grid-row: 2/3;
    grid-column: 1/2;
-   color: rgb(210, 207, 207);
-   border-right: 2px solid rgb(47,47,47);
+   color: rgb(0, 0, 0);
+   border-right: 2px solid rgb(141, 141, 141);
 }
 #sidebar-container{
     display: flex;
@@ -35,7 +35,7 @@ nav li{
     list-style: none;
 }
 .nav-item:hover{
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     background-color: rgb(255, 0, 0);
     cursor: pointer;
 }
@@ -71,7 +71,7 @@ nav li{
 .editTxt{
     font-size: 22px;
     font-weight: bold;
-    color: rgb(210, 207, 207);
+    color: rgb(0, 0, 0);
 }
 
 /*New Project Form*/
@@ -183,6 +183,35 @@ header div button{
     display: none;
     margin-left: 10px;
 }
+.taskComplete{
+    background-color: rgb(210, 207, 207);
+}
+
+/*task edit css*/
+.taskEdit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:fixed;
+    z-index: 2;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(5px);
+}
+#taskEditForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    height: 300px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+}
+/*task edit css*/
 /*end of main content css*/
 /*form style*/
 .formDiv{
