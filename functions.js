@@ -56,4 +56,14 @@ else{
 
 
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete};
+
+function getIndex (project, task){
+    //Pass the project name and the task id to get the index of the project and the task
+    const projectIndex = Project.projects.findIndex(x => x.name == project);
+    if(task){
+    const taskIndex = Project.projects[projectIndex].todos.findIndex(x => x.id == task);
+    return {projectIndex, taskIndex};
+    }else{return projectIndex};
+   
+}
+export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex};

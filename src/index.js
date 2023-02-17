@@ -124,10 +124,15 @@ element.addEventListener('click', (event)=>{
 });
 });
 document.querySelector('.content').addEventListener('click', (event)=>{
-
+        //If its not the project settings or the project edit button (so the user coudl open settings window)
    if(!event.target.closest('.projectSettings') && !event.target.closest('.projectEdit')){
     if(document.querySelector('.projectSettings')){
      document.querySelector('.projectSettings').remove();
+   }}
+   if(!event.target.closest('.taskSettings') && !event.target.closest('.editBtn')){
+    if(document.querySelector('.taskEdit')){
+     document.querySelector('.taskEdit').remove();
+        console.log("removed");
    }}
 });
 /* 

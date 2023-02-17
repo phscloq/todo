@@ -29,7 +29,7 @@ function displayProject(project){//This is for the initial load of the page, cal
     console.log(projectId);
     console.log(Project.projects);
     console.log(Project.projects[projectId]);
-   const tasksHTML = Project.projects[projectId].todos.map(todo => `<div class="task" id="${j}${todo.title}">
+   const tasksHTML = Project.projects[projectId].todos.map((todo, index) => `<div class="task" id="${Project.projects[projectId].todos[index].id}">
    <div class="task_title">${todo.title}</div><div class="taskR">
    <div class="task_date">${todo.dueDate}</div>
    <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
