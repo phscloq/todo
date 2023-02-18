@@ -1,5 +1,6 @@
 //creating todo model
 import { displayProject } from "./content";
+import { turnObjectToTodo } from "./functions";
 class Todo {
     constructor(title, description, dueDate, priority) {
         this.title = title;
@@ -35,16 +36,16 @@ class Project {
         if(projects){
             Project.projects=projects;
         }
-        Project.projects.forEach(project => {
-            displayProject(project);
+        Project.projects.forEach(x => {
+            displayProject(x);
     });
 }
 }
 
 
-const task1= new Todo('42', 'The meaning of 42', '2021-01-01', 'low');
-const task2= new Todo('Read the article', 'Take notes and highlight', '2021-01-01', 'high');
-const task3= new Todo('Finish the project', 'Finish the project', '2021-01-01', 'high');
+const task1= new Todo('42', 'The meaning of 42', '2021-01-01', 'Low');
+const task2= new Todo('Read the article', 'Take notes and highlight', '2021-01-01', 'High');
+const task3= new Todo('Finish the project', 'Finish the project', '2021-01-01', 'High');
 const project1 = new Project('Study');
 const project2 = new Project('Hobby');
 const project3 = new Project('Work');

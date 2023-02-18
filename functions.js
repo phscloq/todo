@@ -1,20 +1,20 @@
 import { Todo, Project } from "./classes";
 import { displayContent } from "./content";
+import { completedTasks } from "./src";
 
-
-function taskNumbers(project){
-
+function taskNumbers(project){  
+/*     document.getElementById(`${project.name}`).childNodes[2].childNodes[0].textContent = `${completedTasks}/`; */
     document.getElementById(`${project.name}`).childNodes[2].childNodes[1].textContent = `${project.todos.length}`;
     }
     
     function deleteProject(project){
-      /*   console.log(Project.projects);
-        console.log(Project.projects.findIndex(x => x.name == project.id)); */
+  
         const index = Project.projects.findIndex(x => x.id == project);
-
+        
         Project.projects.splice(index, 1);
         console.log(Project.projects);
         localStorageUpdate();
+        console.log(document.querySelector(`[data=${project}]`));
         document.querySelector(`[data=${project}]`).remove();
    
         console.log("This is index:");
@@ -25,7 +25,8 @@ function taskNumbers(project){
         } 
         console.log("This is y:");
         console.log(y);
-        const {tasksHTML, taskAddHtml}= displayContent(y);
+        const lastProject = Project.projects[y].id;
+        const {tasksHTML, taskAddHtml}= displayContent(lastProject);
         document.querySelector('#section-title').textContent = Project.projects[y].name;
         document.querySelector('#task-container').innerHTML = tasksHTML;
         document.querySelector('#task-container').appendChild(taskAddHtml);
@@ -46,13 +47,20 @@ function taskNumbers(project){
 function taskComplete(e){
 console.log(e);
 //code for changing style of e
+const pName = e.parentNode.parentNode.childNodes[0].textContent;
+const tId = e.id;
+const {projectIndex, taskIndex} = getIndex(pName, tId);
+console.log(Project.projects[projectIndex].todos[taskIndex] instanceof Todo);
 if(!e.classList.contains('taskComplete')){
+    Project.projects[projectIndex].todos[taskIndex].completed=true;
+    completedTasks++;
 e.classList.add('taskComplete');}
 else{
+    Project.projects[projectIndex].todos[taskIndex].completed=false;
     e.classList.remove('taskComplete');
 }
 
-
+localStorageUpdate();
 
 
 }
@@ -66,4 +74,13 @@ function getIndex (project, task){
     }else{return projectIndex};
    
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex};
+function turnObjectToTodo(object){
+    console.log("turning object to todo");
+    console.log(object);
+    const task = new Todo();
+  Object.assign(task, object);
+  console.log(task);
+  localStorageUpdate();
+  return task;
+}
+export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo};

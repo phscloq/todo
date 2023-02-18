@@ -2,11 +2,11 @@ console.log("Working!");
 import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
-import {taskNumbers, deleteProject, deleteTask, taskComplete} from "../functions";
+import {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex} from "../functions";
 import { format } from "date-fns";
 import {displayContent, homeTab, newProject} from "../content";
 import {projectSetting, taskEdit} from "../opens";
-
+let completedTasks = 0;
 pageLoad();
 console.log(format(new Date(), "'Today is a' eeee"));
 
@@ -40,9 +40,10 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
   if (event.target.classList.contains('project')) {
   
     sectionTitle.textContent = event.target.id;
+    
+    const projectName = event.target.id;
 
-    const data = event.target.getAttribute('data');
-    const {tasksHTML, taskAddHtml}= displayContent(data);
+    const {tasksHTML, taskAddHtml}= displayContent(getIndex(projectName));
     document.querySelector('#task-container').innerHTML = tasksHTML;
    document.querySelector('#task-container').appendChild(taskAddHtml);
    
@@ -79,25 +80,31 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
                         const taskDescription = document.getElementById('taskDescription').value;
                         const taskDueDate = document.getElementById('taskDueDate').value;
                         const taskPriority = document.getElementById('taskPriority').value;
-                        const addTask = document.getElementById('taskAddBtn');
+             
                         const projectName = document.getElementById('section-title').textContent;
-                        
+  
+                        const projectIndex = getIndex(projectName);
+                    
                         const task = new Todo(taskTitle, taskDescription, taskDueDate, taskPriority);
+                        console.log(task)
+                        console.log(task instanceof Todo);
                                         //resetting the form
                                         document.getElementById("taskName").value = "";
                                         document.getElementById("taskDueDate").value = "";
                                         document.getElementById("taskDescription").value = "";
-                                       
 
-                        Project.projects[addTask.value].todos.push(task);
+                        console.log(projectName);
+                    
+                        Project.projects[projectIndex].todos.push(task);
                         localStorage.setItem('projects', JSON.stringify(Project.projects));
-                        const index = Project.projects.findIndex(x => x.name == projectName);
-                        const {tasksHTML, taskAddHtml}= displayContent(index);
+                        //from the section title, find the project index
+
+                        const {tasksHTML, taskAddHtml}= displayContent(projectIndex);
                         document.querySelector('#task-container').innerHTML = tasksHTML;
                         document.querySelector('#task-container').appendChild(taskAddHtml);
 
                         document.getElementById('formDiv').style.display = 'none';
-                        taskNumbers(Project.projects[addTask.value]);
+                        taskNumbers(Project.projects[projectIndex]);
 
                  });
         
@@ -106,7 +113,7 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
 document.getElementById('projectSubmit').addEventListener('click', (event)=>{
     event.preventDefault();
     const projectName = document.getElementById('projectName').value;
-    const project = new Project(projectName, `${Project.projects.length}${projectName}`);
+    const project = new Project(projectName);
     localStorage.setItem('projects', JSON.stringify(Project.projects));
     newProject(project);
     document.getElementById('projectName').value = "";
@@ -129,10 +136,26 @@ document.querySelector('.content').addEventListener('click', (event)=>{
     if(document.querySelector('.projectSettings')){
      document.querySelector('.projectSettings').remove();
    }}
-   if(!event.target.closest('.taskSettings') && !event.target.closest('.editBtn')){
+   if(!event.target.closest('.taskSettings') && !event.target.closest('#taskEditForm')){
     if(document.querySelector('.taskEdit')){
-     document.querySelector('.taskEdit').remove();
-        console.log("removed");
+     document.querySelector('.taskEdit').style.display = 'none';
+        const taskTitle = document.getElementById('taskEditTitle').value;
+        const taskDescription = document.getElementById('taskEditDesc').value;
+        const taskDueDate = document.getElementById('taskEditDueDate').value;
+        const taskPriority = document.getElementById('taskEditPriority').value;
+        const taskId = document.getElementById('taskEdit').getAttribute('data');
+        const projectName = document.getElementById('section-title').textContent;
+        const {projectIndex, taskIndex} = getIndex(projectName, taskId);
+        Project.projects[projectIndex].todos[taskIndex].title = taskTitle;
+        Project.projects[projectIndex].todos[taskIndex].description = taskDescription;
+        Project.projects[projectIndex].todos[taskIndex].dueDate = taskDueDate;
+        Project.projects[projectIndex].todos[taskIndex].priority = taskPriority;
+        localStorage.setItem('projects', JSON.stringify(Project.projects));
+        const {tasksHTML, taskAddHtml}= displayContent(projectIndex);
+        document.querySelector('#task-container').innerHTML = tasksHTML;
+        document.querySelector('#task-container').appendChild(taskAddHtml);
+
+
    }}
 });
 /* 
@@ -159,7 +182,10 @@ taskComplete(event.target);
 
     if(event.target.id === 'editTaskBtn'){
         event.preventDefault();
+        if(document.querySelector('.taskEdit')){
+        document.querySelector('.taskEdit').remove();}
         taskEdit(event.target);
     }
 });
 
+export {completedTasks};

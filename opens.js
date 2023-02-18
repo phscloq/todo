@@ -3,7 +3,9 @@ import { getIndex } from "./functions";
 import { Project } from "./classes";
 
 function projectSetting(e){//onclick event for settingsBtn (...) for Project
-
+                if(document.querySelector('.projectSettings')){
+                        document.querySelector('.projectSettings').remove();
+                }
             const editDiv = `<div class="projectSettings" id="projectSettings"><button class="deleteBtn" id="deletePrjBtn">Delete</button><button class="editBtn" id="editPrjBtn">Edit</button></div>`;
             e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
         }
@@ -15,9 +17,9 @@ function taskEdit(e){//onclick event for editTaskBtn
         const projectName = e.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[0].textContent;
         const {projectIndex, taskIndex }= getIndex(projectName, taskId);
      
-        const editDiv=`<div class=taskEdit id=taskEdit>
+        const editDiv=`<div class=taskEdit id=taskEdit data=${Project.projects[projectIndex].todos[taskIndex].id}>
         <form action="" id="taskEditForm">
-        <div class="taskEditTitle"><input type="text" id="taskEditTitle" value=${Project.projects[projectIndex].todos[taskIndex].title} ></div>
+        <div class="taskEditTitle"><input type="text" id="taskEditTitle" value=${Project.projects[projectIndex].todos[taskIndex].title}></div>
         <div class="taskEditDesc"><textarea id="taskEditDesc" cols="30" rows="10">${Project.projects[projectIndex].todos[taskIndex].description}</textarea></div>
         <div class="taskEditDueDate"><input type="date" id="taskEditDueDate" value=${Project.projects[projectIndex].todos[taskIndex].dueDate}></div>
         <div class="taskEditPriority"><select id="taskEditPriority">
@@ -26,13 +28,18 @@ function taskEdit(e){//onclick event for editTaskBtn
         <option value="High">High</option>      
         </select></div></form>
         </div>`;
-        if(document.querySelector('#taskEditPriority')){
-         document.querySelector('#taskEditPriority').value=Project.projects[projectIndex].todos[taskIndex].priority;
-        }
+ 
+        
+        console.log("Priority:");
+
         console.log(e);
         //append it to body
         const content = document.querySelector('.content');
         content.insertAdjacentHTML('beforeend', editDiv);
+        console.log(Project.projects[projectIndex].todos[taskIndex].priority);
+        document.getElementById('taskEditPriority').value = Project.projects[projectIndex].todos[taskIndex].priority;
+        
+         
         }
     
 
