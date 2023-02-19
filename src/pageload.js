@@ -1,4 +1,5 @@
 import { Todo, Project } from "../classes";
+import { homeTab } from "../content";
 
 import { handleTaskSubmit } from "../functions";
 let i=0;
@@ -162,6 +163,7 @@ formDiv.appendChild(form);
 content.append(header, sidebar, mainSection);
 body.append(content, formDiv);
 Project.getProjects();
+homeTab();
 /* Project.projects.forEach(project => {
     const projectTitle = document.createElement('li');
     projectTitle.textContent = project.name;

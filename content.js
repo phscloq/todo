@@ -17,13 +17,15 @@ function displayProject(project){//This is for the initial load of the page, cal
  let j=0;
  function displayContent(projectIndex){
   //Works with index of project, not id
-
+  console.log("This is projectIndex:");
+  console.log(projectIndex);
+  console.log(Project.projects[projectIndex]);
    const tasksHTML = Project.projects[projectIndex].todos.map((todo, index) => {
-    const task = turnObjectToTodo(todo);
-   const taskClass = task.completed ? 'task taskComplete' : 'task';
+    
+   const taskClass = todo.completed ? 'task taskComplete' : 'task';
    return `<div class="${taskClass}" id="${Project.projects[projectIndex].todos[index].id}">
-   <div class="task_title">${task.title}</div><div class="taskR">
-   <div class="task_date">${task.dueDate}</div>
+   <div class="task_title">${todo.title}</div><div class="taskR">
+   <div class="task_date">${todo.dueDate}</div>
    <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
    
    </div></div>`}).join('');
@@ -47,10 +49,10 @@ function homeTab(){
     document.querySelector('#task-container').innerHTML = '';
     console.log("Home Tab");
     for (let j=0; j < Project.projects.length; j++){
-      const { tasksHTML } = displayContent(Project.projects[j].id);
+      const { tasksHTML } = displayContent(getIndex(Project.projects[j].name));
       document.querySelector('#task-container').innerHTML += tasksHTML;
     }
-    const { taskAddHtml } = displayContent(Project.projects[0].id);
+    const { taskAddHtml } = displayContent(0);
     document.querySelector('#task-container').appendChild(taskAddHtml);
   }
 
