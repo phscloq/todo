@@ -6,7 +6,7 @@ import {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex} from "..
 import { format } from "date-fns";
 import {displayContent, homeTab, newProject} from "../content";
 import {projectSetting, taskEdit} from "../opens";
-let completedTasks = 0;
+
 pageLoad();
 console.log(format(new Date(), "'Today is a' eeee"));
 
@@ -188,4 +188,3 @@ taskComplete(event.target);
     }
 });
 
-export {completedTasks};

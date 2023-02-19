@@ -18,8 +18,6 @@ function displayProject(project){//This is for the initial load of the page, cal
  function displayContent(projectIndex){
   //Works with index of project, not id
 
- 
-
    const tasksHTML = Project.projects[projectIndex].todos.map((todo, index) => {
     const task = turnObjectToTodo(todo);
    const taskClass = task.completed ? 'task taskComplete' : 'task';

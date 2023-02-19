@@ -26,6 +26,7 @@ class Project {
         this.id=Math.random().toString(36).substring(2, 9);
         this.name = name;
         this.todos = [];
+        this.completedTasks = 0;
         Project.projects.push(this);
     }
     addTodo(todo) {
