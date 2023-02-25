@@ -171,6 +171,12 @@ header div button{
     border-radius: 5px;
     background-color: #eaeaea;
 }
+.high{
+    border: 1px solid red;
+}
+.medium{
+    border: 1px solid orange;
+}
 .task:hover > .taskR > .taskSettings{
     display: flex;
 }
