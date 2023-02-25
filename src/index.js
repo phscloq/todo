@@ -94,7 +94,7 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
                                         document.getElementById("taskDescription").value = "";
 
                         console.log(projectName);
-                    
+                        task.project = Project.projects[projectIndex].name;
                         Project.projects[projectIndex].todos.push(task);
                         localStorage.setItem('projects', JSON.stringify(Project.projects));
                         //from the section title, find the project index
@@ -131,7 +131,7 @@ element.addEventListener('click', (event)=>{
 });
 });
 document.querySelector('.content').addEventListener('click', (event)=>{
-        //If its not the project settings or the project edit button (so the user coudl open settings window)
+        //If its not the project settings or the project edit button (so the user could open settings window)
    if(!event.target.closest('.projectSettings') && !event.target.closest('.projectEdit')){
     if(document.querySelector('.projectSettings')){
      document.querySelector('.projectSettings').remove();
@@ -144,37 +144,36 @@ document.querySelector('.content').addEventListener('click', (event)=>{
         const taskDueDate = document.getElementById('taskEditDueDate').value;
         const taskPriority = document.getElementById('taskEditPriority').value;
         const taskId = document.getElementById('taskEdit').getAttribute('data');
-        const projectName = document.getElementById('section-title').textContent;
+        const projectName = document.getElementById('taskEdit').getAttribute('data-project');
         const {projectIndex, taskIndex} = getIndex(projectName, taskId);
+
+
         Project.projects[projectIndex].todos[taskIndex].title = taskTitle;
         Project.projects[projectIndex].todos[taskIndex].description = taskDescription;
         Project.projects[projectIndex].todos[taskIndex].dueDate = taskDueDate;
         Project.projects[projectIndex].todos[taskIndex].priority = taskPriority;
         localStorage.setItem('projects', JSON.stringify(Project.projects));
+     
+        if(document.getElementById('section-title').textContent === 'Home'){homeTab();}
+        else if(!document.getElementById('section-title').textContent === 'Home'){
+         
         const {tasksHTML, taskAddHtml}= displayContent(projectIndex);
         document.querySelector('#task-container').innerHTML = tasksHTML;
-        document.querySelector('#task-container').appendChild(taskAddHtml);
+        document.querySelector('#task-container').appendChild(taskAddHtml);}
 
 
    }}
 });
-/* 
-document.querySelector('.taskAddBtn').addEventListener('click', (event)=>{
-    event.preventDefault();
-    showForm(event.target);
-   
-}); */
+
 document.getElementById('task-container').addEventListener('click', (event)=>{
   
     if(event.target.id === 'deleteTaskBtn'){
      
-        console.log(event.target.parentNode.parentNode.parentNode.parentNode);
-        const taskArray = event.target.parentNode.parentNode.parentNode.parentNode.childNodes;
-        const taskIndex = Array.from(taskArray).indexOf(event.target.parentNode.parentNode.parentNode);
-       
-  
-        const index = Project.projects.findIndex(project => project.name === sectionTitle.textContent);
-        deleteTask(index, taskIndex);
+        const data = event.target.parentNode.parentNode.parentNode.id;
+        const projectName = event.target.parentNode.parentNode.parentNode.getAttribute('data-project');
+        console.log(event.target.parentNode.parentNode.parentNode);
+        const {projectIndex, taskIndex} = getIndex(projectName, data);
+        deleteTask(projectIndex, taskIndex);
     }
 if(event.target.classList.contains('task')){
 taskComplete(event.target);
@@ -184,7 +183,11 @@ taskComplete(event.target);
         event.preventDefault();
         if(document.querySelector('.taskEdit')){
         document.querySelector('.taskEdit').remove();}
+               //get data-project
+               console.log("Looking for data-project");
+               console.log(event.target.parentNode.parentNode.parentNode.getAttribute('data-project'));
         taskEdit(event.target);
+
     }
 });
 

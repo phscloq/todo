@@ -1,6 +1,6 @@
 import { Todo, Project } from "./classes";
 import { displayContent } from "./content";
-
+import { homeTab } from "./content";
 
 function taskNumbers(project){  
 /*     document.getElementById(`${project.name}`).childNodes[2].childNodes[0].textContent = `${completedTasks}/`; */
@@ -35,13 +35,17 @@ function taskNumbers(project){
         document.querySelector('#task-container').appendChild(taskAddHtml);
     }
     function deleteTask(x, y){
+        //x is the project index, y is the task index
         Project.projects[x].todos.splice(y, 1);
         console.log(Project.projects);
         localStorageUpdate();
         taskNumbers(Project.projects[x]);
+        if(document.getElementById('section-title').textContent === 'Home'){homeTab();}
+        else if(!document.getElementById('section-title').textContent === 'Home'){
+         
         const {tasksHTML, taskAddHtml}=displayContent(x);
         document.querySelector('#task-container').innerHTML = tasksHTML;
-        document.querySelector('#task-container').appendChild(taskAddHtml);
+        document.querySelector('#task-container').appendChild(taskAddHtml);}
     }
     function localStorageUpdate(){
         localStorage.setItem('projects', JSON.stringify(Project.projects));
@@ -88,4 +92,14 @@ function turnObjectToTodo(object){
   localStorageUpdate();
   return task;
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo};
+function sorting(projectIndex){
+
+    const pTodos = Project.projects[projectIndex].todos;
+    pTodos.sort((a, b) => {
+      const priorityOrder = ['High', 'Medium', 'Low'];
+      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+    
+    });
+
+}
+export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting};

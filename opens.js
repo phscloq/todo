@@ -13,11 +13,11 @@ function projectSetting(e){//onclick event for settingsBtn (...) for Project
 function taskEdit(e){//onclick event for editTaskBtn
 
         const taskId = e.parentNode.parentNode.parentNode.id;
-
-        const projectName = e.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[0].textContent;
+        console.log(taskId);
+        const projectName = e.parentNode.parentNode.parentNode.getAttribute('data-project');
         const {projectIndex, taskIndex }= getIndex(projectName, taskId);
      
-        const editDiv=`<div class=taskEdit id=taskEdit data=${Project.projects[projectIndex].todos[taskIndex].id}>
+        const editDiv=`<div class=taskEdit id=taskEdit data=${Project.projects[projectIndex].todos[taskIndex].id} data-project=${projectName}>
         <form action="" id="taskEditForm">
         <div class="taskEditTitle"><input type="text" id="taskEditTitle" value=${Project.projects[projectIndex].todos[taskIndex].title}></div>
         <div class="taskEditDesc"><textarea id="taskEditDesc" cols="30" rows="10">${Project.projects[projectIndex].todos[taskIndex].description}</textarea></div>

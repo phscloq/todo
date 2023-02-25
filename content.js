@@ -1,6 +1,6 @@
 import { Todo, Project } from "./classes";
 import { projectSetting } from "./opens";
-import { getIndex, turnObjectToTodo } from "./functions";
+import { getIndex, sorting } from "./functions";
 function showForm(){//onclick event for taskAddBtn
   document.getElementById('formDiv').style.display = 'flex';
       }
@@ -17,13 +17,14 @@ function displayProject(project){//This is for the initial load of the page, cal
  let j=0;
  function displayContent(projectIndex){
   //Works with index of project, not id
-  console.log("This is projectIndex:");
-  console.log(projectIndex);
-  console.log(Project.projects[projectIndex]);
+ 
+    sorting(projectIndex);
+ 
    const tasksHTML = Project.projects[projectIndex].todos.map((todo, index) => {
-    
+  const taskPriority = todo.priority;
+  const taskPriorityClass = taskPriority.toLowerCase();
    const taskClass = todo.completed ? 'task taskComplete' : 'task';
-   return `<div class="${taskClass}" id="${Project.projects[projectIndex].todos[index].id}">
+   return `<div class="${taskClass} ${taskPriorityClass}" id="${Project.projects[projectIndex].todos[index].id}" data-project="${todo.project}">
    <div class="task_title">${todo.title}</div><div class="taskR">
    <div class="task_date">${todo.dueDate}</div>
    <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
@@ -48,13 +49,31 @@ function displayProject(project){//This is for the initial load of the page, cal
 function homeTab(){
     document.querySelector('#task-container').innerHTML = '';
     console.log("Home Tab");
+    const allTaskArr = [];
     for (let j=0; j < Project.projects.length; j++){
-      const { tasksHTML } = displayContent(getIndex(Project.projects[j].name));
-      document.querySelector('#task-container').innerHTML += tasksHTML;
+      allTaskArr.push(...Project.projects[j].todos);
     }
-    const { taskAddHtml } = displayContent(0);
-    document.querySelector('#task-container').appendChild(taskAddHtml);
-  }
+    allTaskArr.sort((a, b) => {
+      const priorityOrder = ['High', 'Medium', 'Low'];
+      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+    
+    });
+
+    const tasksHTML = allTaskArr.map((todo, index) => {
+    
+      const taskPriority = todo.priority;
+  const taskPriorityClass = taskPriority.toLowerCase();
+   const taskClass = todo.completed ? 'task taskComplete' : 'task';
+   return `<div class="${taskClass} ${taskPriorityClass}" id="${allTaskArr[index].id}" data-project="${allTaskArr[index].project}">
+   <div class="task_title">${todo.title}</div><div class="taskR">
+   <div class="task_date">${todo.dueDate}</div>
+   <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
+   
+   </div></div>`
+
+  }).join('');
+  document.querySelector('#task-container').innerHTML = tasksHTML;
+}
 
 //Sidepanel related
 function newProject(project){//Creating a new project, will also update task-container
