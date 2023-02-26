@@ -1,7 +1,7 @@
 import { Todo, Project } from "./classes";
 import { projectSetting } from "./opens";
 import { getIndex, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks } from "./functions";
-import { format, getDate } from "date-fns";
+
 function showForm(){//onclick event for taskAddBtn
   document.getElementById('formDiv').style.display = 'flex';
       }
