@@ -44,13 +44,12 @@ class Project {
 }
 }
 
-
-const task1= new Todo('42', 'The meaning of 42', '2021-01-01', 'Low');
-const task2= new Todo('Read the article', 'Take notes and highlight', '2021-01-01', 'Medium');
-const task3= new Todo('Finish the project', 'Finish the project', '2021-01-01', 'High');
-const task4= new Todo('write the paper', 'Finish the paper', '2021-01-01', 'Medium');
-const task5= new Todo('Finish the ToDo App', 'Finish the todo app', '2021-01-01', 'High');
-const task6= new Todo('Get Paid', 'lets earn some moneyyy', '2021-02-15', 'High');
+const task1= new Todo('42', 'The meaning of 42', '01/01/2021', 'Low');
+const task2= new Todo('Read the article', 'Take notes and highlight', '01/01/2021', 'Medium');
+const task3= new Todo('Finish the project', 'Finish the project', '01/01/2021', 'High');
+const task4= new Todo('write the paper', 'Finish the paper', '01/01/2021', 'Medium');
+const task5= new Todo('Finish the ToDo App', 'Finish the todo app', '01/01/2021', 'High');
+const task6= new Todo('Get Paid', 'lets earn some moneyyy', '15/02/2021', 'High');
 const project1 = new Project('Study');
 const project2 = new Project('Hobby');
 const project3 = new Project('Work');
