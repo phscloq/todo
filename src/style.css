@@ -76,7 +76,31 @@ nav li{
     font-weight: bold;
     color: rgb(0, 0, 0);
 }
-
+.projectEditDiv{
+    margin: 10px 10px 10px;
+}
+.projectEditDiv input{
+   font-size: 21px;
+}
+.projectEditDiv form{
+    width: 124px;
+    display: flex;
+    flex-direction: column;
+}
+.projectEditBtns{
+    display: flex;
+    justify-content: space-between;
+}
+.projectEditBtns button{
+    height: 28px;
+    padding: 3px;
+}
+.rename{
+    background-color: #f1bcbc;
+}
+.cancel{
+    
+}
 /*New Project Form*/
 
 .newProjectForm{

@@ -14,7 +14,18 @@ function projectSetting(e){//onclick event for settingsBtn (...) for Project
             
         }
 function projectEdit(e){
-        
+        console.log(e);
+        const projectName = e.parentNode.parentNode.id;
+        const projectData = e.parentNode.parentNode.getAttribute('data');
+        console.log(projectName);
+        const editDiv = `<div class="projectEditDiv" id="projectEditDiv" data=${projectData}>
+        <form  id="projectEditForm"><input type="text" id="projectEditTitle" value="${projectName}">
+        <div class="projectEditBtns" id="projectEditBtns"> 
+        <button type="button" class="rename" id="rename">Rename</button>
+        <button class="cancel" id="cancel">Cancel</button>
+        </div></form></div>`;
+        e.parentNode.parentNode.style.display = 'none';
+        e.parentNode.parentNode.insertAdjacentHTML('afterend', editDiv);
 }
 function taskEdit(e){//onclick event for editTaskBtn
 
@@ -49,4 +60,4 @@ function taskEdit(e){//onclick event for editTaskBtn
         }
     
 
-export {projectSetting, taskEdit};
+export {projectSetting, taskEdit, projectEdit};

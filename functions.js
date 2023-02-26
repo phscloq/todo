@@ -145,4 +145,29 @@ function getUpcomingTasks(){
     });
     return upcomingTasks;
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks};
+function projectUpdate(e){
+const projectData = e.parentNode.parentNode.parentNode.getAttribute('data');
+const projectX = Project.projects.findIndex(x => x.id == projectData);
+const projectNewName = e.parentNode.parentNode.childNodes[0].value;
+Project.projects[projectX].name = projectNewName;
+localStorageUpdate();
+
+const {tasksHTML, taskAddHtml}= displayContent(projectX);
+document.querySelector('#section-title').textContent = Project.projects[projectX].name;
+document.querySelector('#task-container').innerHTML = tasksHTML;
+document.querySelector('#task-container').appendChild(taskAddHtml);
+/* const projectHTML = `<li class="project" id="${project.name}" data="${project.id}">${project.name}<div class="projectEdit" id="projectEdit">
+<button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div><div class="taskNumbers" id="taskNumbers">
+<div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`; */
+e.parentNode.parentNode.parentNode.remove();
+
+document.querySelector(`[data='${projectData}']`).id = projectNewName;
+document.querySelector(`[data='${projectData}']`).style.display = 'flex';
+document.querySelector(`[data='${projectData}']`).childNodes[0].textContent = projectNewName;
+}
+function projectEditCancel(e){
+    const projectData = e.parentNode.parentNode.parentNode.getAttribute('data');
+  e.parentNode.parentNode.parentNode.remove();
+  document.querySelector(`[data='${projectData}']`).style.display = 'flex';
+}
+export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks, projectUpdate, projectEditCancel};

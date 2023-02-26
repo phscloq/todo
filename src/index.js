@@ -2,10 +2,10 @@ console.log("Working!");
 import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
-import {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex} from "../functions";
+import {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, projectEditCancel, projectUpdate} from "../functions";
 import { format, getDate } from "date-fns";
 import {displayContent, homeTab, newProject, todayTab, upcomingTab} from "../content";
-import {projectSetting, taskEdit} from "../opens";
+import {projectSetting, taskEdit, projectEdit} from "../opens";
 
 pageLoad();
 
@@ -62,6 +62,17 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
 
     deleteProject(data);
   }
+  if(event.target.id === 'editPrjBtn'){
+    projectEdit(event.target);
+}
+    if(event.target.id === 'rename'){
+        
+        projectUpdate(event.target);
+    }
+    if(event.target.id === 'cancel'){
+        projectEditCancel(event.target);
+    }
+
 
 });
                 //*******FORM ADDEDVENTLISTENERS*******
@@ -129,12 +140,11 @@ document.getElementById('projectSubmit').addEventListener('click', (event)=>{
 
 document.querySelectorAll('.projectEdit').forEach((element)=>{
 element.addEventListener('click', (event)=>{
-
-    if(!document.querySelector('.projectSettings')){
-    
-        projectSetting(event.target);}
+    projectSetting(event.target);
+  
     
 });
+
 });
 document.querySelector('.content').addEventListener('click', (event)=>{
         //If its not the project settings or the project edit button (so the user could open settings window)
