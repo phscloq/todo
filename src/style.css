@@ -34,9 +34,12 @@ nav li{
     margin: 10px 10px 10px;
     list-style: none;
 }
+.nav-item{
+    border-left: 2px solid rgb(135, 135, 135);
+}
 .nav-item:hover{
     color: rgb(0, 0, 0);
-    background-color: rgb(255, 0, 0);
+    border-left: 2px solid red;
     cursor: pointer;
 }
 .project{
@@ -44,7 +47,7 @@ nav li{
     justify-content: space-between;
 }
 .project:hover{
-    text-transform: uppercase;
+    border-left: 2px solid red;
     cursor: pointer;
 }
 .project:hover > .projectEdit{
@@ -136,6 +139,9 @@ header div button{
 .topbar-user{
     display: flex;
     align-items:flex-end;
+}
+.topbar-date{
+    margin-left: 22px;
 }
 /*end of TOPBAR css*/
 
