@@ -1,6 +1,6 @@
 import { Todo, Project } from "./classes";
 import { projectSetting } from "./opens";
-import { getIndex, sorting, getAllTasks, getTodaysTasks } from "./functions";
+import { getIndex, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks } from "./functions";
 import { format, getDate } from "date-fns";
 function showForm(){//onclick event for taskAddBtn
   document.getElementById('formDiv').style.display = 'flex';
@@ -111,4 +111,21 @@ return `<div class="${taskClass} ${taskPriorityClass}" id="${todaysTasks[index].
 }).join('');
 document.querySelector('#task-container').innerHTML = tasksHTML;
 }
-export {displayProject, displayContent, homeTab, newProject, todayTab};
+function upcomingTab(){
+  const upcomingTasks = getUpcomingTasks();
+  const tasksHTML = upcomingTasks.map((todo, index) => {
+    
+    const taskPriority = todo.priority;
+  const taskPriorityClass = taskPriority.toLowerCase();
+  const taskClass = todo.completed ? 'task taskComplete' : 'task';
+  return `<div class="${taskClass} ${taskPriorityClass}" id="${upcomingTasks[index].id}" data-project="${upcomingTasks[index].project}">
+  <div class="task_title">${todo.title}</div><div class="taskR">
+  <div class="task_date">${todo.dueDate}</div>
+  <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
+  
+  </div></div>`
+  
+  }).join('');
+  document.querySelector('#task-container').innerHTML = tasksHTML;
+}
+export {displayProject, displayContent, homeTab, newProject, todayTab, upcomingTab};

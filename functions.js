@@ -1,7 +1,7 @@
 import { Todo, Project } from "./classes";
 import { displayContent } from "./content";
 import { homeTab } from "./content";
-import { format, getDate } from "date-fns";
+import { format, getDate, isFuture, parseISO } from "date-fns";
 function taskNumbers(project){  
 /*     document.getElementById(`${project.name}`).childNodes[2].childNodes[0].textContent = `${completedTasks}/`; */
     document.getElementById(`${project.name}`).childNodes[2].childNodes[1].textContent = `${project.todos.length}`;
@@ -128,4 +128,21 @@ todaysTasks.sort((a, b) => {
 });
 return todaysTasks;
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks};
+function getUpcomingTasks(){
+    const allTasks = getAllTasks();
+    const date = new Date();
+    const todaysDate = format(date, 'dd/MM/yyyy');
+    const upcomingTasks = allTasks.filter((task) => {
+    
+      if(isFuture(new Date(task.dueDate))){
+        
+        return task;
+      }
+      
+    });
+    upcomingTasks.sort((a, b) => {
+        return new Date(a.dueDate) - new Date(b.dueDate);
+    });
+    return upcomingTasks;
+}
+export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks};

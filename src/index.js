@@ -4,7 +4,7 @@ import './style.css'
 import { Todo, Project } from "../classes";
 import {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex} from "../functions";
 import { format, getDate } from "date-fns";
-import {displayContent, homeTab, newProject, todayTab} from "../content";
+import {displayContent, homeTab, newProject, todayTab, upcomingTab} from "../content";
 import {projectSetting, taskEdit} from "../opens";
 
 pageLoad();
@@ -36,7 +36,8 @@ today.addEventListener('click', () => {
 upcoming.addEventListener('click', () => {
     console.log('upcoming');
     sectionTitle.textContent = 'Upcoming';
-    document.querySelector('#task-container').innerHTML ='';    
+    document.querySelector('#task-container').innerHTML ='';   
+    upcomingTab();
 });
 
 //*******PROJECT ADDEDVENTLISTENERS*******
