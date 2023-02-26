@@ -1,7 +1,11 @@
 import { Todo, Project } from "../classes";
 import { homeTab } from "../content";
-
+import { format, getDate } from "date-fns";
 import { handleTaskSubmit } from "../functions";
+
+const date = new Date();
+const dateText = format(new Date(), "'Today is a' eeee");
+const dateNum = format(date, "dd/MM");
 let i=0;
 export default function pageLoad(){
 const body = document.querySelector('body');
@@ -13,23 +17,23 @@ const headerDiv = document.createElement('div');
 const logo = document.createElement('div');
 const userInfo = document.createElement('div');
 const welcomeText = document.createElement('p');
-const signoutBtn = document.createElement('button');
+const dateNumText = document.createElement('p');
 const h1 = document.createElement('h1');
 
-userInfo.append(welcomeText, signoutBtn);
+userInfo.append(welcomeText, dateNumText);
 logo.appendChild(h1);
 header.append(logo, userInfo);
 
 
 h1.textContent = 'wuToDo';
-welcomeText.textContent = 'Welcome, User';
-signoutBtn.textContent = 'Sign Out';
+welcomeText.textContent = `Welcome, ${dateText}`;
+dateNumText.textContent = dateNum;
 headerDiv.setAttribute('id', 'topbar');
 headerDiv.classList.add('topbar-class');
 logo.setAttribute('id', 'topbar-logo');
 userInfo.classList.add('topbar-user');
+dateNumText.classList.add('topbar-date');
 welcomeText.setAttribute('id', 'topbar-welcome');
-signoutBtn.setAttribute('id', 'topbar-btn');
 
 
 
