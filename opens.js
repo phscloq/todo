@@ -7,9 +7,15 @@ function projectSetting(e){//onclick event for settingsBtn (...) for Project
                         document.querySelector('.projectSettings').remove();
                 }
             const editDiv = `<div class="projectSettings" id="projectSettings"><button class="deleteBtn" id="deletePrjBtn">Delete</button><button class="editBtn" id="editPrjBtn">Edit</button></div>`;
-            e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
+            if(e.classList.contains('editTxt')){
+            e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}
+            else if(e.classList.contains('settingsBtn')){
+                e.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}
+            
         }
-
+function projectEdit(e){
+        
+}
 function taskEdit(e){//onclick event for editTaskBtn
 
         const taskId = e.parentNode.parentNode.parentNode.id;
