@@ -1,6 +1,7 @@
 import { Todo, Project } from "./classes";
 import { projectSetting } from "./opens";
-import { getIndex, sorting } from "./functions";
+import { getIndex, sorting, getAllTasks, getTodaysTasks } from "./functions";
+import { format, getDate } from "date-fns";
 function showForm(){//onclick event for taskAddBtn
   document.getElementById('formDiv').style.display = 'flex';
       }
@@ -19,7 +20,7 @@ function displayProject(project){//This is for the initial load of the page, cal
   //Works with index of project, not id
  
     sorting(projectIndex);
- 
+
    const tasksHTML = Project.projects[projectIndex].todos.map((todo, index) => {
   const taskPriority = todo.priority;
   const taskPriorityClass = taskPriority.toLowerCase();
@@ -92,5 +93,22 @@ function newProject(project){//Creating a new project, will also update task-con
         });
     });
 }
+function todayTab(){
+const todaysTasks = getTodaysTasks();
+console.log(todaysTasks);
+const tasksHTML = todaysTasks.map((todo, index) => {
+    
+  const taskPriority = todo.priority;
+const taskPriorityClass = taskPriority.toLowerCase();
+const taskClass = todo.completed ? 'task taskComplete' : 'task';
+return `<div class="${taskClass} ${taskPriorityClass}" id="${todaysTasks[index].id}" data-project="${todaysTasks[index].project}">
+<div class="task_title">${todo.title}</div><div class="taskR">
+<div class="task_date">${todo.dueDate}</div>
+<div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
 
-export {displayProject, displayContent, homeTab, newProject};
+</div></div>`
+
+}).join('');
+document.querySelector('#task-container').innerHTML = tasksHTML;
+}
+export {displayProject, displayContent, homeTab, newProject, todayTab};

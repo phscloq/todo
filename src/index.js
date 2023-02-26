@@ -3,18 +3,21 @@ import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
 import {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex} from "../functions";
-import { format } from "date-fns";
-import {displayContent, homeTab, newProject} from "../content";
+import { format, getDate } from "date-fns";
+import {displayContent, homeTab, newProject, todayTab} from "../content";
 import {projectSetting, taskEdit} from "../opens";
 
 pageLoad();
-console.log(format(new Date(), "'Today is a' eeee"));
 
+console.log(format(new Date(), "'Today is a' eeee"));
+const date = new Date();
+const todays = format(date, "dd/MM/yyyy");
+console.log(todays);
 //
 const home = document.getElementById('home');
 const today = document.getElementById('today');
 const upcoming = document.getElementById('upcoming');
-const projects = document.querySelectorAll('.project');
+
 const sectionTitle = document.getElementById('section-title');
 
 
@@ -26,8 +29,9 @@ home.addEventListener('click', () => {
 });
 today.addEventListener('click', () => {
     console.log('today');
-    sectionTitle.textContent = Project.projects[0].name;
+    sectionTitle.textContent = 'Today';
     document.querySelector('#task-container').innerHTML ='';
+    todayTab();
 });
 upcoming.addEventListener('click', () => {
     console.log('upcoming');
@@ -78,7 +82,8 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
                     
                         const taskTitle = document.getElementById('taskName').value;
                         const taskDescription = document.getElementById('taskDescription').value;
-                        const taskDueDate = document.getElementById('taskDueDate').value;
+                        const taskDueDate =  format(new Date(document.getElementById('taskDueDate').value), "dd/MM/yyyy");
+                       
                         const taskPriority = document.getElementById('taskPriority').value;
              
                         const projectName = document.getElementById('section-title').textContent;
@@ -142,6 +147,7 @@ document.querySelector('.content').addEventListener('click', (event)=>{
         const taskTitle = document.getElementById('taskEditTitle').value;
         const taskDescription = document.getElementById('taskEditDesc').value;
         const taskDueDate = document.getElementById('taskEditDueDate').value;
+        const formatedDueDate = format(new Date(taskDueDate), "dd/MM/yyyy");
         const taskPriority = document.getElementById('taskEditPriority').value;
         const taskId = document.getElementById('taskEdit').getAttribute('data');
         const projectName = document.getElementById('taskEdit').getAttribute('data-project');
@@ -150,7 +156,7 @@ document.querySelector('.content').addEventListener('click', (event)=>{
 
         Project.projects[projectIndex].todos[taskIndex].title = taskTitle;
         Project.projects[projectIndex].todos[taskIndex].description = taskDescription;
-        Project.projects[projectIndex].todos[taskIndex].dueDate = taskDueDate;
+        Project.projects[projectIndex].todos[taskIndex].dueDate = formatedDueDate;
         Project.projects[projectIndex].todos[taskIndex].priority = taskPriority;
         localStorage.setItem('projects', JSON.stringify(Project.projects));
      

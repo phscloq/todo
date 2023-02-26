@@ -1,7 +1,7 @@
 import { Todo, Project } from "./classes";
 import { displayContent } from "./content";
 import { homeTab } from "./content";
-
+import { format, getDate } from "date-fns";
 function taskNumbers(project){  
 /*     document.getElementById(`${project.name}`).childNodes[2].childNodes[0].textContent = `${completedTasks}/`; */
     document.getElementById(`${project.name}`).childNodes[2].childNodes[1].textContent = `${project.todos.length}`;
@@ -102,4 +102,30 @@ function sorting(projectIndex){
     });
 
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting};
+function getAllTasks(){
+    let allTasks = [];
+    Project.projects.forEach(project => {
+        project.todos.forEach(task => {
+            allTasks.push(task);
+        });
+    });
+    return allTasks;
+}
+function getTodaysTasks(){
+    const allTasks = getAllTasks();
+
+const date = new Date();
+const todaysDate = format(date, 'dd/MM/yyyy');
+const todaysTasks = allTasks.filter((task) => {
+  if(task.dueDate === todaysDate){
+    return task;
+  }
+  
+});
+todaysTasks.sort((a, b) => {
+    const priorityOrder = ['High', 'Medium', 'Low'];
+    return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+});
+return todaysTasks;
+}
+export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks};
