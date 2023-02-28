@@ -6,7 +6,7 @@ import { handleTaskSubmit } from "../functions";
 const date = new Date();
 const dateText = format(new Date(), "'Today is a' eeee");
 const dateNum = format(date, "dd/MM");
-let i=0;
+
 export default function pageLoad(){
 const body = document.querySelector('body');
 const content = document.createElement('div');
@@ -52,7 +52,7 @@ const projectsList = document.createElement('ul');
 projects.append(projectsSectionTitle, projectsList);
 navlist.append(home, today, upcoming, projects);
 
-
+projectsSectionTitle.setAttribute('id', 'projectSectionTitle');
 projectsList.setAttribute('id', 'projects-list');
 sidebar.setAttribute('id', 'sidebar');
 sidebarContent.setAttribute('id', 'sidebar-container');
@@ -155,11 +155,10 @@ taskName.placeholder = 'What do you need to do?';
 taskDescription.placeholder = 'Description';
 
 taskPriority.append(taskP1, taskP2, taskP3);
-formInputs.append(taskName, taskDescription, taskDueDate, taskPriority/* , taskProject */);
+formInputs.append(taskName, taskDescription, taskDueDate, taskPriority);
 formButtons.append(taskSubmit, taskCancel);
 form.append(formInputs, formButtons);
 formDiv.appendChild(form);
-
 
 
 
@@ -168,14 +167,5 @@ content.append(header, sidebar, mainSection);
 body.append(content, formDiv);
 Project.getProjects();
 homeTab();
-/* Project.projects.forEach(project => {
-    const projectTitle = document.createElement('li');
-    projectTitle.textContent = project.name;
-    projectTitle.classList.add('project');
-    projectTitle.setAttribute('id', project.name);
-    projectsList.appendChild(projectTitle);
-    sectionTitle.textContent = project.name;
-   projectTitle.setAttribute('value', i);
-   i++;
-}); */
+
 }
