@@ -8,17 +8,27 @@ import {displayContent, homeTab, newProject, todayTab, upcomingTab} from "../con
 import {projectSetting, taskEdit, projectEdit} from "../opens";
 
 pageLoad();
+const prList= document.getElementById('projects-list');
+
 
 console.log(format(new Date(), "'Today is a' eeee"));
 const date = new Date();
 const todays = format(date, "dd/MM/yyyy");
 console.log(todays);
 //
+
 const home = document.getElementById('home');
 const today = document.getElementById('today');
 const upcoming = document.getElementById('upcoming');
-
+const projectSection = document.getElementById('projectSectionTitle');
 const sectionTitle = document.getElementById('section-title');
+projectSection.addEventListener('click', () => {
+    if(prList.style.display = 'none'){
+        prList.style.display = 'block';
+    }
+ });  
+
+
 
 
 

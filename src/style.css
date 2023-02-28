@@ -321,3 +321,46 @@ header div button{
     content: "X";
 }
 
+@media (max-width: 480px){
+    .content{
+    grid-template-rows: 100px 1fr 100px;
+    grid-template-columns: 1fr;
+    }
+    nav{
+      grid-row: 3;
+    }#sidebar-container{flex-direction: row;
+        margin: 0px;
+        padding: 0px;
+        
+    }
+    #sidebar-navlist{
+        display:flex;
+    }
+    .newProjectFormDiv{
+        display: none;
+    }
+    .nav-item {
+        border: none;
+    }
+    #projects-list{
+        display: none;
+    }
+    header{
+        
+    }
+    .topbar-user{flex-direction: column;}
+    #mainSection{
+     display: flex;
+    width: 100vw;
+    grid-row: 2/3;    
+    }#content-container{
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+    }#content-container h2{align-self: center;}
+   #projects-list{
+    display: flex;
+    margin-top: -84px;
+    margin-left: 20px;
+   }
+}
