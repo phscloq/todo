@@ -67,12 +67,6 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
    document.querySelector('#task-container').appendChild(taskAddHtml);
    
   }
-/*  if (event.target.classList.contains('projectSettings')){
-    console.log(event.target);
-  } */
-
-   
-
 });
 
 
@@ -152,7 +146,7 @@ document.querySelector('.content').addEventListener('click', (event)=>{
                 document.querySelector('.projectSettings').remove();
                 document.getElementById('content-container').style.opacity = '1';
             }}
-   //Anywhere outside of task edit form will close the task edit form and saves the changes
+   //Clicking anywhere outside of task edit form will close the task edit form and saves the changes
         if(!event.target.closest('.taskSettings') && !event.target.closest('#taskEditForm')){
             if(document.querySelector('.taskEdit')){
             document.querySelector('.taskEdit').style.display = 'none';
@@ -163,6 +157,7 @@ document.querySelector('.content').addEventListener('click', (event)=>{
                 const taskPriority = document.getElementById('taskEditPriority').value;
                 const taskId = document.getElementById('taskEdit').getAttribute('data');
                 const projectName = document.getElementById('taskEdit').getAttribute('data-project');
+                document.querySelector('.taskEdit').remove();
                 const {projectIndex, taskIndex} = getIndex(projectName, taskId);
 
 
@@ -171,9 +166,11 @@ document.querySelector('.content').addEventListener('click', (event)=>{
                 Project.projects[projectIndex].todos[taskIndex].dueDate = formatedDueDate;
                 Project.projects[projectIndex].todos[taskIndex].priority = taskPriority;
                 localStorage.setItem('projects', JSON.stringify(Project.projects));
-            
-                if(document.getElementById('section-title').textContent === 'Home'){homeTab();}
-                else if(!document.getElementById('section-title').textContent === 'Home'){
+               
+                if(document.getElementById('section-title').textContent === 'Home'){homeTab();
+                 
+                }
+                else {
                 
                 const {tasksHTML, taskAddHtml}= displayContent(projectIndex);
                 document.querySelector('#task-container').innerHTML = tasksHTML;
