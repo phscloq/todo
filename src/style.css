@@ -47,6 +47,13 @@ nav li{
     display: flex;
     justify-content: space-between;
 }
+.prjName{
+    font-size: 1.5rem;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .project:hover{
     border-left: 2px solid red;
     cursor: pointer;
@@ -390,6 +397,14 @@ header div button{
     }
     .projectEditBtns{
         padding-top: 10px;
+    }
+    .prjName{
+        font-size: 1.5rem;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 150px;
     }
 }
 

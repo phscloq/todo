@@ -3,10 +3,12 @@ import { displayContent } from "./content";
 import { homeTab } from "./content";
 import { format, getDate, isFuture, parseISO } from "date-fns";
 function taskNumbers(project){  
-/*     document.getElementById(`${project.name}`).childNodes[2].childNodes[0].textContent = `${completedTasks}/`; */
-    document.getElementById(`${project.name}`).childNodes[2].childNodes[1].textContent = `${project.todos.length}`;
     const projectIndex = getIndex(project.name);
-    document.getElementById(`${project.name}`).childNodes[2].childNodes[0].textContent = `${Project.projects[projectIndex].completedTasks}/`;
+
+    
+    document.getElementById(`${project.name}`).childNodes[5].childNodes[0].textContent = `${Project.projects[projectIndex].completedTasks}/`;
+    document.getElementById(`${project.name}`).childNodes[5].childNodes[2].textContent = `${Project.projects[projectIndex].todos.length}`;
+       
     }
     
     function deleteProject(project){
@@ -54,7 +56,7 @@ function taskNumbers(project){
 function taskComplete(e){
 console.log(e);
 //code for changing style of e
-const pName = e.parentNode.parentNode.childNodes[0].textContent;
+const pName = e.getAttribute('data-project');
 const tId = e.id;
 const {projectIndex, taskIndex} = getIndex(pName, tId);
 console.log(Project.projects[projectIndex].todos[taskIndex] instanceof Todo);

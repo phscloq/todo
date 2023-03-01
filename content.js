@@ -9,7 +9,12 @@ function showForm(){//onclick event for taskAddBtn
 
 
 function displayProject(project){//This is for the initial load of the page, called in index.js
-    const projectHTML = `<li class="project" id="${project.name}" data="${project.id}">${project.name}<div class="projectEdit" id="projectEdit"><button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div><div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
+    const projectHTML = `<li class="project" id="${project.name}" data="${project.id}">
+    <h3 class="prjName">${project.name}</h3>
+    <div class="projectEdit" id="projectEdit">
+    <button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div>
+    <div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">${project.completedTasks}/</div>
+    <div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
    
   
     document.querySelector('#projects-list').insertAdjacentHTML('beforeend', projectHTML);
@@ -26,7 +31,7 @@ function displayProject(project){//This is for the initial load of the page, cal
 
   const taskPriorityClass = taskPriority.toLowerCase();
    const taskClass = todo.completed ? 'task taskComplete' : 'task';
-   return `<div class="${taskClass} ${taskPriorityClass}" id="${Project.projects[projectIndex].todos[index].id}" data-project="${todo.project}">
+   return `<div class="${taskClass} ${taskPriorityClass}" id="${Project.projects[projectIndex].todos[index].id}" data-project="${Project.projects[projectIndex].name}">
    <div class="task_title">${todo.title}</div><div class="taskR">
    <div class="task_date">${todo.dueDate}</div>
    <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>

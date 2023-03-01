@@ -26,9 +26,11 @@ projectSection.addEventListener('click', () => {
     const computedStyle = getComputedStyle(prList);
     if(computedStyle.display === 'none'){
         prList.style.display = 'flex';
+        document.querySelector('.newProjectFormDiv').style.display = 'block';
     }
     else if(computedStyle.display === 'flex'){
-        prList.style.display = 'none';}
+        prList.style.display = 'none';
+        document.querySelector('.newProjectFormDiv').style.display = 'none';}
  });  
 
 
@@ -56,11 +58,11 @@ upcoming.addEventListener('click', () => {
 //*******PROJECT ADDEDVENTLISTENERS*******
 document.getElementById('projects-list').addEventListener('click', (event) => {
 
-  if (event.target.classList.contains('project')) {
+  if (event.target.classList.contains('prjName')) {
     
-    sectionTitle.textContent = event.target.id;
+    sectionTitle.textContent = event.target.parentNode.id;
     
-    const projectName = event.target.id;
+    const projectName = event.target.parentNode.id;
 
     const {tasksHTML, taskAddHtml}= displayContent(getIndex(projectName));
     document.querySelector('#task-container').innerHTML = tasksHTML;
