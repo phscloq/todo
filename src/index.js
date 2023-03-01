@@ -15,7 +15,7 @@ console.log(format(new Date(), "'Today is a' eeee"));
 const date = new Date();
 const todays = format(date, "dd/MM/yyyy");
 console.log(todays);
-//
+
 
 const home = document.getElementById('home');
 const today = document.getElementById('today');
@@ -23,9 +23,12 @@ const upcoming = document.getElementById('upcoming');
 const projectSection = document.getElementById('projectSectionTitle');
 const sectionTitle = document.getElementById('section-title');
 projectSection.addEventListener('click', () => {
-    if(prList.style.display = 'none'){
-        prList.style.display = 'block';
+    const computedStyle = getComputedStyle(prList);
+    if(computedStyle.display === 'none'){
+        prList.style.display = 'flex';
     }
+    else if(computedStyle.display === 'flex'){
+        prList.style.display = 'none';}
  });  
 
 
@@ -52,8 +55,9 @@ upcoming.addEventListener('click', () => {
 
 //*******PROJECT ADDEDVENTLISTENERS*******
 document.getElementById('projects-list').addEventListener('click', (event) => {
+
   if (event.target.classList.contains('project')) {
-  
+    
     sectionTitle.textContent = event.target.id;
     
     const projectName = event.target.id;
@@ -66,25 +70,12 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
 /*  if (event.target.classList.contains('projectSettings')){
     console.log(event.target);
   } */
-  if(event.target.id === 'deletePrjBtn'){
- 
-    const data = event.target.parentNode.parentNode.getAttribute('data');
 
-    deleteProject(data);
-  }
-  if(event.target.id === 'editPrjBtn'){
-    projectEdit(event.target);
-}
-    if(event.target.id === 'rename'){
-        
-        projectUpdate(event.target);
-    }
-    if(event.target.id === 'cancel'){
-        projectEditCancel(event.target);
-    }
-
+   
 
 });
+
+
                 //*******FORM ADDEDVENTLISTENERS*******
 //Cancel Button
 document.getElementById('formBtnCancel').addEventListener('click', (e) => {
@@ -150,46 +141,78 @@ document.getElementById('projectSubmit').addEventListener('click', (event)=>{
 
 document.querySelectorAll('.projectEdit').forEach((element)=>{
 element.addEventListener('click', (event)=>{
-    projectSetting(event.target);
-  
-    
+    projectSetting(event.target);  
 });
 
 });
 document.querySelector('.content').addEventListener('click', (event)=>{
         //If its not the project settings or the project edit button (so the user could open settings window)
-   if(!event.target.closest('.projectSettings') && !event.target.closest('.projectEdit')){
-    if(document.querySelector('.projectSettings')){
-     document.querySelector('.projectSettings').remove();
-   }}
-   if(!event.target.closest('.taskSettings') && !event.target.closest('#taskEditForm')){
-    if(document.querySelector('.taskEdit')){
-     document.querySelector('.taskEdit').style.display = 'none';
-        const taskTitle = document.getElementById('taskEditTitle').value;
-        const taskDescription = document.getElementById('taskEditDesc').value;
-        const taskDueDate = document.getElementById('taskEditDueDate').value;
-        const formatedDueDate = format(new Date(taskDueDate), "dd/MM/yyyy");
-        const taskPriority = document.getElementById('taskEditPriority').value;
-        const taskId = document.getElementById('taskEdit').getAttribute('data');
-        const projectName = document.getElementById('taskEdit').getAttribute('data-project');
-        const {projectIndex, taskIndex} = getIndex(projectName, taskId);
+            if(!event.target.closest('.projectSettings') && !event.target.closest('.projectEdit')){
+                if(document.querySelector('.projectSettings')){
+                document.querySelector('.projectSettings').remove();
+                document.getElementById('content-container').style.opacity = '1';
+            }}
+   //Anywhere outside of task edit form will close the task edit form and saves the changes
+        if(!event.target.closest('.taskSettings') && !event.target.closest('#taskEditForm')){
+            if(document.querySelector('.taskEdit')){
+            document.querySelector('.taskEdit').style.display = 'none';
+                const taskTitle = document.getElementById('taskEditTitle').value;
+                const taskDescription = document.getElementById('taskEditDesc').value;
+                const taskDueDate = document.getElementById('taskEditDueDate').value;
+                const formatedDueDate = format(new Date(taskDueDate), "dd/MM/yyyy");
+                const taskPriority = document.getElementById('taskEditPriority').value;
+                const taskId = document.getElementById('taskEdit').getAttribute('data');
+                const projectName = document.getElementById('taskEdit').getAttribute('data-project');
+                const {projectIndex, taskIndex} = getIndex(projectName, taskId);
 
 
-        Project.projects[projectIndex].todos[taskIndex].title = taskTitle;
-        Project.projects[projectIndex].todos[taskIndex].description = taskDescription;
-        Project.projects[projectIndex].todos[taskIndex].dueDate = formatedDueDate;
-        Project.projects[projectIndex].todos[taskIndex].priority = taskPriority;
-        localStorage.setItem('projects', JSON.stringify(Project.projects));
+                Project.projects[projectIndex].todos[taskIndex].title = taskTitle;
+                Project.projects[projectIndex].todos[taskIndex].description = taskDescription;
+                Project.projects[projectIndex].todos[taskIndex].dueDate = formatedDueDate;
+                Project.projects[projectIndex].todos[taskIndex].priority = taskPriority;
+                localStorage.setItem('projects', JSON.stringify(Project.projects));
+            
+                if(document.getElementById('section-title').textContent === 'Home'){homeTab();}
+                else if(!document.getElementById('section-title').textContent === 'Home'){
+                
+                const {tasksHTML, taskAddHtml}= displayContent(projectIndex);
+                document.querySelector('#task-container').innerHTML = tasksHTML;
+                document.querySelector('#task-container').appendChild(taskAddHtml);}
+            }}
+       //------------------Task Settings------------------
+       if(document.getElementById('projectSettings')){
+        document.querySelector('.projectSettings').addEventListener('click', (event)=>{
+           
+            if(event.target.id === 'deletePrjBtn'){
      
-        if(document.getElementById('section-title').textContent === 'Home'){homeTab();}
-        else if(!document.getElementById('section-title').textContent === 'Home'){
-         
-        const {tasksHTML, taskAddHtml}= displayContent(projectIndex);
-        document.querySelector('#task-container').innerHTML = tasksHTML;
-        document.querySelector('#task-container').appendChild(taskAddHtml);}
+                const data = event.target.parentNode.getAttribute('data-pr');
+            
+                deleteProject(data);
+              }
+              if(event.target.id === 'editPrjBtn'){
+                console.log(event.target);
+                console.log('clicked');
+                projectEdit(event.target);
+            }
+        
+        
+        });}
+        if(document.getElementById('projectEditDiv')){
+            document.querySelector('.projectEditDiv').addEventListener('click', (event)=>{
+                if(event.target.id === 'rename'){
+                    console.log("rename");
+                    projectUpdate(event.target);
+                    document.getElementById('content-container').style.opacity = '1';
+                }
+                if(event.target.id === 'cancel'){
+                    projectEditCancel(event.target);
+                    document.getElementById('content-container').style.opacity = '1';
+                }
 
+            });
 
-   }}
+        }
+
 });
 
 document.getElementById('task-container').addEventListener('click', (event)=>{

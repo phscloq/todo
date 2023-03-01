@@ -146,6 +146,7 @@ function getUpcomingTasks(){
     return upcomingTasks;
 }
 function projectUpdate(e){
+    console.log("projectUpdate called")
 const projectData = e.parentNode.parentNode.parentNode.getAttribute('data');
 const projectX = Project.projects.findIndex(x => x.id == projectData);
 const projectNewName = e.parentNode.parentNode.childNodes[0].value;

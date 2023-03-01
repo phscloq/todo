@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
 }
+@media  (min-width: 181px) {
 .content{
     height: 100vh;
     display: grid;
@@ -98,9 +99,7 @@ nav li{
 .rename{
     background-color: #f1bcbc;
 }
-.cancel{
-    
-}
+
 /*New Project Form*/
 
 .newProjectForm{
@@ -320,7 +319,7 @@ header div button{
 
     content: "X";
 }
-
+}
 @media (max-width: 480px){
     .content{
     grid-template-rows: 100px 1fr 100px;
@@ -328,13 +327,16 @@ header div button{
     }
     nav{
       grid-row: 3;
-    }#sidebar-container{flex-direction: row;
+    }#sidebar-container{
+        display: block;
         margin: 0px;
         padding: 0px;
+        width: auto;
         
     }
     #sidebar-navlist{
         display:flex;
+        justify-content: space-around;
     }
     .newProjectFormDiv{
         display: none;
@@ -344,10 +346,21 @@ header div button{
     }
     #projects-list{
         display: none;
+     position: absolute;
+     bottom: 100px;
+        left: 0;
+        border-top: 1px solid black;
+        overflow: scroll;
+        width: 100%;
+        background-color: rgb(181, 181, 181);
+        z-index: 1;
+    }.taskNumbers, .projectEdit{
+        padding-left: 10px;
     }
-    header{
-        
+    .project{
+        padding-right: 5px;
     }
+   
     .topbar-user{flex-direction: column;}
     #mainSection{
      display: flex;
@@ -358,9 +371,26 @@ header div button{
         flex-direction: column;
         width: 400px;
     }#content-container h2{align-self: center;}
-   #projects-list{
-    display: flex;
-    margin-top: -84px;
-    margin-left: 20px;
-   }
+    .projectSettings{
+        margin: 0;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+    .projectEditDiv{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        padding: 10px;
+        box-shadow: 0 0 10px 0 rgb(0 0 0 / 50%);
+        background-color: whitesmoke;
+    }
+    .projectEditBtns{
+        padding-top: 10px;
+    }
 }
+
+   

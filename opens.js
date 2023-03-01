@@ -3,20 +3,40 @@ import { getIndex } from "./functions";
 import { Project } from "./classes";
 
 function projectSetting(e){//onclick event for settingsBtn (...) for Project
+        const prList= document.getElementById('projects-list');
+       const data = e.parentNode.parentNode.parentNode.getAttribute('data');
+        const computedStyle = getComputedStyle(prList);
                 if(document.querySelector('.projectSettings')){
                         document.querySelector('.projectSettings').remove();
                 }
-            const editDiv = `<div class="projectSettings" id="projectSettings"><button class="deleteBtn" id="deletePrjBtn">Delete</button><button class="editBtn" id="editPrjBtn">Edit</button></div>`;
+            const editDiv = `<div class="projectSettings" id="projectSettings" data-pr="${data}"><button class="deleteBtn" id="deletePrjBtn">Delete</button><button class="editBtn" id="editPrjBtn">Edit</button></div>`;
             if(e.classList.contains('editTxt')){
-            e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}
+                if(computedStyle.display === 'flex'){//checking if it is in mobile view
+                        
+                        e.parentNode.parentNode.parentNode.parentNode.insertAdjacentHTML('afterend', editDiv);
+                       document.getElementById('content-container').style.opacity = '0.5';
+                }
+                else{
+            e.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}}
             else if(e.classList.contains('settingsBtn')){
-                e.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}
+                
+                if(computedStyle.display === 'flex'){
+                        console.log(computedStyle.display);
+                        e.parentNode.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
+                        console.log(e.parentNode.parentNode.parentNode.parentNode);
+                }
+        else{e.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}}
             
         }
 function projectEdit(e){
+        console.log('project edit called');
+        const prList= document.getElementById('projects-list');
+       
+        const computedStyle = getComputedStyle(prList);
         console.log(e);
-        const projectName = e.parentNode.parentNode.id;
-        const projectData = e.parentNode.parentNode.getAttribute('data');
+        const projectData = e.parentNode.getAttribute('data-pr');
+        const pX = Project.projects.findIndex((project)=> project.id === projectData);
+        const projectName = Project.projects[pX].name;
         console.log(projectName);
         const editDiv = `<div class="projectEditDiv" id="projectEditDiv" data=${projectData}>
         <form  id="projectEditForm"><input type="text" id="projectEditTitle" value="${projectName}">
@@ -24,8 +44,19 @@ function projectEdit(e){
         <button type="button" class="rename" id="rename">Rename</button>
         <button class="cancel" id="cancel">Cancel</button>
         </div></form></div>`;
-        e.parentNode.parentNode.style.display = 'none';
-        e.parentNode.parentNode.insertAdjacentHTML('afterend', editDiv);
+ 
+       
+        if(computedStyle.display === 'flex'){//checking if it is in mobile view
+                 console.log(e);
+          
+                e.parentNode.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
+                document.getElementById('projectSettings').remove();
+            
+        }
+        else{
+                e.parentNode.parentNode.style.display = 'none';
+                e.parentNode.parentNode.insertAdjacentHTML('afterend', editDiv);
+        }
 }
 function taskEdit(e){//onclick event for editTaskBtn
 
