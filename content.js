@@ -18,11 +18,12 @@ function displayProject(project){//This is for the initial load of the page, cal
  let j=0;
  function displayContent(projectIndex){
   //Works with index of project, not id
- 
+  
     sorting(projectIndex);
 
    const tasksHTML = Project.projects[projectIndex].todos.map((todo, index) => {
   const taskPriority = todo.priority;
+
   const taskPriorityClass = taskPriority.toLowerCase();
    const taskClass = todo.completed ? 'task taskComplete' : 'task';
    return `<div class="${taskClass} ${taskPriorityClass}" id="${Project.projects[projectIndex].todos[index].id}" data-project="${todo.project}">
@@ -48,6 +49,7 @@ function displayProject(project){//This is for the initial load of the page, cal
 }
 
 function homeTab(){
+
     document.querySelector('#task-container').innerHTML = '';
     console.log("Home Tab");
     const allTaskArr = [];

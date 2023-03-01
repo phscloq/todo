@@ -1,7 +1,7 @@
 //Description: This file contains the functions that are used to create/OPEN the forms for adding new tasks and projects and form to edit them.
 import { getIndex } from "./functions";
 import { Project } from "./classes";
-
+import {format, parse} from "date-fns";
 function projectSetting(e){//onclick event for settingsBtn (...) for Project
         const prList= document.getElementById('projects-list');
        const data = e.parentNode.parentNode.parentNode.getAttribute('data');
@@ -64,12 +64,16 @@ function taskEdit(e){//onclick event for editTaskBtn
         console.log(taskId);
         const projectName = e.parentNode.parentNode.parentNode.getAttribute('data-project');
         const {projectIndex, taskIndex }= getIndex(projectName, taskId);
-     
+       
+        
+      const theDate = parse(Project.projects[projectIndex].todos[taskIndex].dueDate, 'dd/MM/yyyy', new Date());
+      const dueDate = format(theDate, 'yyyy-MM-dd');
+        /* console.log(format(theDate, 'yyyy-MM-dd')); */
         const editDiv=`<div class=taskEdit id=taskEdit data=${Project.projects[projectIndex].todos[taskIndex].id} data-project=${projectName}>
         <form action="" id="taskEditForm">
         <div class="taskEditTitle"><input type="text" id="taskEditTitle" value=${Project.projects[projectIndex].todos[taskIndex].title}></div>
         <div class="taskEditDesc"><textarea id="taskEditDesc" cols="30" rows="10">${Project.projects[projectIndex].todos[taskIndex].description}</textarea></div>
-        <div class="taskEditDueDate"><input type="date" id="taskEditDueDate" value=${Project.projects[projectIndex].todos[taskIndex].dueDate}></div>
+        <div class="taskEditDueDate"><input type="date" id="taskEditDueDate" value=${dueDate}></div>
         <div class="taskEditPriority"><select id="taskEditPriority">
         <option value="Low">Low</option>
         <option value="Medium">Medium</option>
