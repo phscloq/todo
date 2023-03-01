@@ -61,12 +61,12 @@ project3.addTodo(task3);
 project3.addTodo(task5);
 project3.addTodo(task6);
 
-project1.todos[0].project=project1.name;
-project1.todos[1].project=project1.name;
-project2.todos[0].project=project2.name;
-project3.todos[0].project=project3.name;
-project3.todos[1].project=project3.name;
-project3.todos[2].project=project3.name;
+project1.todos[0].project=project1.id;
+project1.todos[1].project=project1.id;
+project2.todos[0].project=project2.id;
+project3.todos[0].project=project3.id;
+project3.todos[1].project=project3.id;
+project3.todos[2].project=project3.id;
 
 console.log(Project.projects);
 /* Project.getProjects(); */
