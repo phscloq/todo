@@ -1,9 +1,9 @@
 import { Todo, Project } from "./classes";
 import { displayContent } from "./content";
 import { homeTab } from "./content";
-import { format, getDate, isFuture, parseISO } from "date-fns";
+import { format, isFuture, parse } from "date-fns";
 function taskNumbers(project){  
-    const projectIndex = getIndex(project.name);
+    const projectIndex = getIndex(project.id);
 
     
     document.getElementById(`${project.name}`).childNodes[5].childNodes[0].textContent = `${Project.projects[projectIndex].completedTasks}/`;
@@ -30,7 +30,7 @@ function taskNumbers(project){
         } 
         console.log("This is y:");
         console.log(y);
-        const lastProject = Project.projects[y].name;
+        const lastProject = Project.projects[y].id;
         const {tasksHTML, taskAddHtml}= displayContent(getIndex(lastProject));
         document.querySelector('#section-title').textContent = Project.projects[y].name;
         document.querySelector('#task-container').innerHTML = tasksHTML;
@@ -38,12 +38,16 @@ function taskNumbers(project){
     }
     function deleteTask(x, y){
         //x is the project index, y is the task index
+        if(Project.projects[x].todos[y].completed){
+            Project.projects[x].completedTasks--;
+        }
         Project.projects[x].todos.splice(y, 1);
         console.log(Project.projects);
         localStorageUpdate();
+        
         taskNumbers(Project.projects[x]);
         if(document.getElementById('section-title').textContent === 'Home'){homeTab();}
-        else if(!document.getElementById('section-title').textContent === 'Home'){
+        else{
          
         const {tasksHTML, taskAddHtml}=displayContent(x);
         document.querySelector('#task-container').innerHTML = tasksHTML;
@@ -78,7 +82,7 @@ taskNumbers(Project.projects[projectIndex]);
 
 function getIndex (project, task){
     //Pass the project name and the task id to get the index of the project and the task
-    const projectIndex = Project.projects.findIndex(x => x.name == project);
+    const projectIndex = Project.projects.findIndex(x => x.id == project);
     if(task){
     const taskIndex = Project.projects[projectIndex].todos.findIndex(x => x.id == task);
     return {projectIndex, taskIndex};
@@ -99,10 +103,15 @@ function sorting(projectIndex){
     const pTodos = Project.projects[projectIndex].todos;
     pTodos.sort((a, b) => {
       const priorityOrder = ['High', 'Medium', 'Low'];
-      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+    return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
     
     });
-
+}
+function sortByComplete(projectIndex){
+    const pTodos = Project.projects[projectIndex].todos;
+    pTodos.sort((a, b) => {
+        return a.completed - b.completed;
+    });
 }
 function getAllTasks(){
     let allTasks = [];
@@ -132,12 +141,12 @@ return todaysTasks;
 }
 function getUpcomingTasks(){
     const allTasks = getAllTasks();
-    const date = new Date();
-    const todaysDate = format(date, 'dd/MM/yyyy');
+
     const upcomingTasks = allTasks.filter((task) => {
+        const dueDate = parse(task.dueDate, 'dd/MM/yyyy', new Date());
     
-      if(isFuture(new Date(task.dueDate))){
-        
+      if(isFuture(dueDate)){
+
         return task;
       }
       
@@ -166,11 +175,11 @@ e.parentNode.parentNode.parentNode.remove();
 
 document.querySelector(`[data='${projectData}']`).id = projectNewName;
 document.querySelector(`[data='${projectData}']`).style.display = 'flex';
-document.querySelector(`[data='${projectData}']`).childNodes[0].textContent = projectNewName;
+document.querySelector(`[data='${projectData}']`).childNodes[1].textContent = projectNewName;
 }
 function projectEditCancel(e){
     const projectData = e.parentNode.parentNode.parentNode.getAttribute('data');
   e.parentNode.parentNode.parentNode.remove();
   document.querySelector(`[data='${projectData}']`).style.display = 'flex';
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks, projectUpdate, projectEditCancel};
+export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks, projectUpdate, projectEditCancel, sortByComplete};

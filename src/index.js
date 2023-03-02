@@ -58,16 +58,25 @@ upcoming.addEventListener('click', () => {
 //*******PROJECT ADDEDVENTLISTENERS*******
 document.getElementById('projects-list').addEventListener('click', (event) => {
 
-  if (event.target.classList.contains('prjName')) {
+  if (event.target.classList.contains('project')) {
     
-    sectionTitle.textContent = event.target.parentNode.id;
+    sectionTitle.textContent = event.target.id;
     
-    const projectName = event.target.parentNode.id;
+    const projectId = event.target.getAttribute('data');
 
-    const {tasksHTML, taskAddHtml}= displayContent(getIndex(projectName));
+    const {tasksHTML, taskAddHtml}= displayContent(getIndex(projectId));
     document.querySelector('#task-container').innerHTML = tasksHTML;
    document.querySelector('#task-container').appendChild(taskAddHtml);
    
+  }
+  else if(event.target.classList.contains('prjName')){
+    sectionTitle.textContent = event.target.parentNode.id;
+    
+    const projectId = event.target.parentNode.getAttribute('data');
+
+    const {tasksHTML, taskAddHtml}= displayContent(getIndex(projectId));
+    document.querySelector('#task-container').innerHTML = tasksHTML;
+   document.querySelector('#task-container').appendChild(taskAddHtml);
   }
 });
 
@@ -97,7 +106,7 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
              
                         const projectName = document.getElementById('section-title').textContent;
   
-                        const projectIndex = getIndex(projectName);
+                        const projectIndex = Project.projects.findIndex((project) => project.name === projectName);
                     
                         const task = new Todo(taskTitle, taskDescription, taskDueDate, taskPriority);
                         console.log(task)
@@ -108,7 +117,7 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
                                         document.getElementById("taskDescription").value = "";
 
                         console.log(projectName);
-                        task.project = Project.projects[projectIndex].name;
+                        task.project = Project.projects[projectIndex].id;
                         Project.projects[projectIndex].todos.push(task);
                         localStorage.setItem('projects', JSON.stringify(Project.projects));
                         //from the section title, find the project index

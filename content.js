@@ -1,6 +1,6 @@
 import { Todo, Project } from "./classes";
 import { projectSetting } from "./opens";
-import { getIndex, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks } from "./functions";
+import { getIndex, sorting, sortByComplete, getTodaysTasks, getUpcomingTasks } from "./functions";
 
 function showForm(){//onclick event for taskAddBtn
   document.getElementById('formDiv').style.display = 'flex';
@@ -20,18 +20,18 @@ function displayProject(project){//This is for the initial load of the page, cal
     document.querySelector('#projects-list').insertAdjacentHTML('beforeend', projectHTML);
 
  }
- let j=0;
+
  function displayContent(projectIndex){
   //Works with index of project, not id
   
     sorting(projectIndex);
-
+    sortByComplete(projectIndex);
    const tasksHTML = Project.projects[projectIndex].todos.map((todo, index) => {
   const taskPriority = todo.priority;
 
   const taskPriorityClass = taskPriority.toLowerCase();
    const taskClass = todo.completed ? 'task taskComplete' : 'task';
-   return `<div class="${taskClass} ${taskPriorityClass}" id="${Project.projects[projectIndex].todos[index].id}" data-project="${Project.projects[projectIndex].name}">
+   return `<div class="${taskClass} ${taskPriorityClass}" id="${Project.projects[projectIndex].todos[index].id}" data-project="${Project.projects[projectIndex].id}">
    <div class="task_title">${todo.title}</div><div class="taskR">
    <div class="task_date">${todo.dueDate}</div>
    <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
@@ -66,7 +66,9 @@ function homeTab(){
       return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
     
     });
-
+    allTaskArr.sort((a, b) => {
+      return a.completed - b.completed;
+  });
     const tasksHTML = allTaskArr.map((todo, index) => {
     
       const taskPriority = todo.priority;
@@ -85,11 +87,16 @@ function homeTab(){
 
 //Sidepanel related
 function newProject(project){//Creating a new project, will also update task-container
-    const projectHTML = `<li class="project" id="${project.name}" data="${project.id}">${project.name}<div class="projectEdit" id="projectEdit"><button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div><div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
+    const projectHTML = `<li class="project" id="${project.name}" data="${project.id}">
+    <h3 class="prjName">${project.name}</h3>
+    <div class="projectEdit" id="projectEdit">
+    <button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div>
+    <div class="taskNumbers" id="taskNumbers"><div class="completed" id="completed">${project.completedTasks}/</div>
+    <div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`;
     document.querySelector('#projects-list').insertAdjacentHTML('beforeend', projectHTML);
     document.getElementById('section-title').textContent = project.name;
 
-    const {tasksHTML, taskAddHtml}=displayContent(getIndex(project.name));
+    const {tasksHTML, taskAddHtml}=displayContent(getIndex(project.id));
     document.querySelector('#task-container').innerHTML = tasksHTML;
     document.querySelector('#task-container').appendChild(taskAddHtml);
     document.querySelectorAll('.projectEdit').forEach((element)=>{
