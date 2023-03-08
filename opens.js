@@ -26,7 +26,7 @@ function projectSetting(e){//onclick event for settingsBtn (...) for Project
                         console.log(e.parentNode.parentNode.parentNode.parentNode);
                 }
         else{e.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}}
-            
+            document.getElementById('projectSettings').classList.add('center');
         }
 function projectEdit(e){
         console.log('project edit called');
@@ -57,6 +57,7 @@ function projectEdit(e){
                 e.parentNode.parentNode.style.display = 'none';
                 e.parentNode.parentNode.insertAdjacentHTML('afterend', editDiv);
         }
+        document.getElementById('projectEditDiv').classList.add('center');
 }
 function taskEdit(e){//onclick event for editTaskBtn
 
@@ -93,6 +94,10 @@ function taskEdit(e){//onclick event for editTaskBtn
         
          
         }
-    
+function mobileNewProject(){
+        console.log("mobileNewProject called");
+        document.querySelector('.newProjectFormDiv').style.display = 'block';
+        document.getElementById('content-container').style.opacity = '0.5';
+}
 
-export {projectSetting, taskEdit, projectEdit};
+export {projectSetting, taskEdit, projectEdit, mobileNewProject};

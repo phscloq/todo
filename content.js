@@ -6,7 +6,10 @@ function showForm(){//onclick event for taskAddBtn
   document.getElementById('formDiv').style.display = 'flex';
       }
 
-
+function mobileAddPrj(){
+  const addPrjBtn = `<button class="mAddPrjBtn"><span class="mAddPrjBtnIcon">Add</span></button>`;
+  document.querySelector('#sidebar-container').insertAdjacentHTML('beforeend', addPrjBtn);
+}
 
 function displayProject(project){//This is for the initial load of the page, called in index.js
     const projectHTML = `<li class="project" id="${project.name}" data="${project.id}">
@@ -142,4 +145,4 @@ function upcomingTab(){
   }).join('');
   document.querySelector('#task-container').innerHTML = tasksHTML;
 }
-export {displayProject, displayContent, homeTab, newProject, todayTab, upcomingTab};
+export {displayProject, displayContent, homeTab, newProject, todayTab, upcomingTab, mobileAddPrj};
