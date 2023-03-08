@@ -79,6 +79,7 @@ projectSubmit.textContent = 'Add';
 projectName.setAttribute('placeholder', 'New Project Name');
 projectSubmit.setAttribute('id', 'projectSubmit');
 newProjectFormDiv.classList.add('newProjectFormDiv');
+newProjectFormDiv.classList.add('center');
 newProjectForm.classList.add('newProjectForm');
 newProjectForm.setAttribute('id', 'newProjectForm');
 projectName.setAttribute('id', 'projectName');
