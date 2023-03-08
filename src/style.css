@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
 }
+
 @media  (min-width: 181px) {
 .content{
     height: 100vh;
@@ -11,12 +12,12 @@
     background-color: rgb(210, 207, 207);
 }
 
-/*Sidepanel CSS*/
+/*******Sidepanel CSS*******/
 nav{
-    background-color: rgb(135, 135, 135);
+    background-color: rgb(47, 47, 47);
    grid-row: 2/3;
    grid-column: 1/2;
-   color: rgb(0, 0, 0);
+   color: rgb(255, 255, 255);
    border-right: 2px solid rgb(141, 141, 141);
 }
 #sidebar-container{
@@ -27,11 +28,8 @@ nav{
     width: 180px;
     padding-left: 20px;
    font-size: 1.5rem;
- 
 }
-
-nav li{
-   
+nav li{  
     margin: 10px 10px 10px;
     list-style: none;
 }
@@ -45,7 +43,7 @@ nav li{
 }
 #projects-list{
     max-height: 238px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .project{
     display: flex;
@@ -76,12 +74,10 @@ nav li{
 }
 .projectEdit{
     display: none;
- 
 }
 .settingsBtn{
     border: none;
     background-color: transparent;
-   
 }
 .editTxt{
     font-size: 22px;
@@ -124,15 +120,14 @@ nav li{
 height: 28px;
 }
 
-/* End of New Project Form*/
-/*Project Settings*/
+/*******End of New Project Form*******/
+/*******Project Settings*******/
 .projectSettings{
     display: grid;
     position: absolute;
     z-index: 2;
     margin-top: 31px;
     margin-left: 16px;
-    /*make it on right side inside the container*/
     width: 136px;
     height: 67px;
     background-color: rgb(255, 255, 255);
@@ -140,8 +135,6 @@ height: 28px;
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
-
-  
 }
 .projectSettings button{
     border: none;
@@ -154,14 +147,14 @@ height: 28px;
 /*Project Settings END*/
 /*END of Sidepanel CSS*/
 
-/*topbar css*/
+/*******topbar css*******/
 header{
     background-color: rgb(47, 47, 47);
    grid-column: 1/3;
    display: flex;
    justify-content: space-between;
    align-items: center;
-   color: rgb(226, 224, 224);
+   color: rgb(255, 255, 255);
 }
 header div{
     margin: 0 20px;
@@ -169,7 +162,6 @@ header div{
 header div button{
     margin: auto 20px;
 }
-
 .topbar-user{
     display: flex;
     align-items:flex-end;
@@ -181,22 +173,22 @@ header div button{
 
 
 
-/*main content css*/
-/* #section-title{
-    text-transform: capitalize;
-} */
+/*******main content css*******/
 .taskAddBtn{
     font-size: 1.95rem;
     color: black;
     padding: 0px 20px;
     border-radius: 5px;
     cursor: pointer;
-
 }
 #mainSection{
     display: flex;
     justify-content: center;
     
+}
+#task-container{
+    max-height: 360px;
+    overflow-y: auto;
 }
 #content-container{
     width: 500px;
@@ -207,16 +199,17 @@ header div button{
     align-items: center;
     margin: 10px 0;
     padding: 10px;
-    border: 1px solid black;
+  
     border-radius: 5px;
     background-color: #eaeaea;
+    border-left: 12px solid #eaeaea;
 }
 
 .high{
-    border: 1px solid red;
+    border-left: 12px solid red;
 }
 .medium{
-    border: 1px solid orange;
+    border-left: 12px solid rgb(207, 141, 19);
 }
 .task:hover > .taskR > .taskSettings{
     display: flex;
@@ -319,13 +312,7 @@ header div button{
     cursor: pointer;
 }
 .formBtnAdd{
-  
-
-   
-
-  
     content: "O";
-    
 }
 .formBtnCancel{
 
@@ -334,7 +321,7 @@ header div button{
 }
 @media (max-width: 480px){
     .content{
-    grid-template-rows: 100px 1fr 100px;
+    grid-template-rows: 100px 1fr 50px;
     grid-template-columns: 1fr;
     }
     nav{
@@ -350,6 +337,10 @@ header div button{
         display:flex;
         justify-content: space-around;
     }
+    #task-container{
+        max-height: 586px;
+       
+    }
     .newProjectFormDiv{
         display: none;
     }
@@ -359,12 +350,13 @@ header div button{
     #projects-list{
         display: none;
      position: absolute;
-     bottom: 100px;
+     bottom: 50px;
         left: 0;
         border-top: 1px solid black;
+        border-bottom: 1px solid gray;
         overflow: scroll;
         width: 100%;
-        background-color: rgb(181, 181, 181);
+        background-color: rgb(47, 47, 47);
         z-index: 1;
     }.taskNumbers, .projectEdit{
         padding-left: 10px;
@@ -385,17 +377,14 @@ header div button{
     }#content-container h2{align-self: center;}
     .projectSettings{
         margin: 0;
-        top:50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
 
     }
     .projectEditDiv{
-        position: absolute;
+       /*  position: absolute;
         top:50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 1;
+        z-index: 1; */
         padding: 10px;
         box-shadow: 0 0 10px 0 rgb(0 0 0 / 50%);
         background-color: whitesmoke;
@@ -411,6 +400,50 @@ header div button{
         white-space: nowrap;
         max-width: 150px;
     }
+    .center{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        margin: 0;
+    }
+    .mAddPrjBtn{
+        margin: 10px 10px 10px;
+        border: 1px solid gray;
+        background-color: rgb(47, 47, 47);
+        position: absolute;
+        bottom: 90px;
+        right: 0;
+    }
+    .mAddPrjBtn span{
+        font-size: 1.3rem;
+        color: white;
+        padding: 5px;
+    }
+   .newProjectFormDiv{
+    display: none;
+    width: inherit;
+    padding: 10px;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 50%);
+    background-color: whitesmoke;
+   }
+   .newProjectForm input{
+    width: inherit;
+   }
+   .newProjectForm{
+    width: 124px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+   .projectFrmBtns #projectSubmit{
+    padding: 4px;
+   }
+/*form için
+
+    
+    */
 }
 
    
