@@ -105,7 +105,8 @@ function newProject(project){//Creating a new project, will also update task-con
 
     const {tasksHTML, taskAddHtml}=displayContent(getIndex(project.id));
     document.querySelector('#task-container').innerHTML = tasksHTML;
-    document.querySelector('#task-container').appendChild(taskAddHtml);
+    if(!document.querySelector('.taskAdd')){
+      document.querySelector('#content-container').appendChild(taskAddHtml);}
     document.querySelectorAll('.projectEdit').forEach((element)=>{
         element.addEventListener('click', (event)=>{
             if(!document.querySelector('.projectSettings')){
