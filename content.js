@@ -31,12 +31,13 @@ function displayProject(project){//This is for the initial load of the page, cal
     sortByComplete(projectIndex);
    const tasksHTML = Project.projects[projectIndex].todos.map((todo, index) => {
   const taskPriority = todo.priority;
-
+  
   const taskPriorityClass = taskPriority.toLowerCase();
    const taskClass = todo.completed ? 'task taskComplete' : 'task';
-   return `<div class="${taskClass} ${taskPriorityClass}" id="${Project.projects[projectIndex].todos[index].id}" data-project="${Project.projects[projectIndex].id}">
+   const fWeight = taskPriorityClass==='high' ? 'b' : '';
+   return `<div class="${taskClass} ${taskPriorityClass}"  id="${Project.projects[projectIndex].todos[index].id}" data-project="${Project.projects[projectIndex].id}">
    <div class="task_title">${todo.title}</div><div class="taskR">
-   <div class="task_date">${todo.dueDate}</div>
+   <div class="task_date  ${fWeight}">${todo.dueDate}</div>
    <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
    
    </div></div>`}).join('');
@@ -57,7 +58,9 @@ function displayProject(project){//This is for the initial load of the page, cal
 }
 
 function homeTab(){
-
+  
+  if(document.querySelector('.taskAdd')){
+    document.querySelector('.taskAdd').remove();}
     document.querySelector('#task-container').innerHTML = '';
     console.log("Home Tab");
     const allTaskArr = [];
@@ -77,9 +80,10 @@ function homeTab(){
       const taskPriority = todo.priority;
   const taskPriorityClass = taskPriority.toLowerCase();
    const taskClass = todo.completed ? 'task taskComplete' : 'task';
+   const fWeight = taskPriorityClass==='high' ? 'b' : '';
    return `<div class="${taskClass} ${taskPriorityClass}" id="${allTaskArr[index].id}" data-project="${allTaskArr[index].project}">
    <div class="task_title">${todo.title}</div><div class="taskR">
-   <div class="task_date">${todo.dueDate}</div>
+   <div class="task_date ${fWeight}">${todo.dueDate}</div>
    <div class="taskSettings" id="taskSettings"><button class="deleteBtn" id="deleteTaskBtn">Delete</button><button class="editBtn" id="editTaskBtn">Edit</button></div>
    
    </div></div>`
@@ -111,6 +115,8 @@ function newProject(project){//Creating a new project, will also update task-con
     });
 }
 function todayTab(){
+  if(document.querySelector('.taskAdd')){
+    document.querySelector('.taskAdd').remove();}
 const todaysTasks = getTodaysTasks();
 console.log(todaysTasks);
 const tasksHTML = todaysTasks.map((todo, index) => {
@@ -129,6 +135,8 @@ return `<div class="${taskClass} ${taskPriorityClass}" id="${todaysTasks[index].
 document.querySelector('#task-container').innerHTML = tasksHTML;
 }
 function upcomingTab(){
+  if(document.querySelector('.taskAdd')){
+  document.querySelector('.taskAdd').remove();}
   const upcomingTasks = getUpcomingTasks();
   const tasksHTML = upcomingTasks.map((todo, index) => {
     
