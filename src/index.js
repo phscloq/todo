@@ -23,7 +23,9 @@ const upcoming = document.getElementById('upcoming');
 const projectSection = document.getElementById('projectSectionTitle');
 const sectionTitle = document.getElementById('section-title');
 const openNewProjectForm = document.getElementsByClassName('mAddPrjBtn');
+if(screen.width <= 710){
 projectSection.addEventListener('click', () => {
+    
     const computedStyle = getComputedStyle(prList);
     if(computedStyle.display === 'none'){
         prList.style.display = 'flex';
@@ -31,14 +33,17 @@ projectSection.addEventListener('click', () => {
     
     }
         mobileAddPrj();
+        
     }
     else if(computedStyle.display === 'flex'){
+        document.querySelector('.mAddPrjBtn').remove();
+       
+        
         prList.style.display = 'none';
-        document.querySelector('.newProjectFormDiv').style.display = 'none';}
+       
+
+        }
  });
- //*******NEW PROJECT FORM DISPLAY *******/  
- if(document.querySelector('.mAddPrjBtn')){
-    console.log("button exists");
 }
 
 
@@ -73,8 +78,9 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
 
     const {tasksHTML, taskAddHtml}= displayContent(getIndex(projectId));
     document.querySelector('#task-container').innerHTML = tasksHTML;
+    if(!document.querySelector('.taskAdd')){
    document.querySelector('#content-container').appendChild(taskAddHtml);
-   
+}
   }
   else if(event.target.classList.contains('prjName')){
     sectionTitle.textContent = event.target.parentNode.id;
@@ -83,7 +89,9 @@ document.getElementById('projects-list').addEventListener('click', (event) => {
 
     const {tasksHTML, taskAddHtml}= displayContent(getIndex(projectId));
     document.querySelector('#task-container').innerHTML = tasksHTML;
-   document.querySelector('#content-container').appendChild(taskAddHtml);
+    if(!document.querySelector('.taskAdd')){
+        document.querySelector('#content-container').appendChild(taskAddHtml);
+     }
   }
 });
 
@@ -147,13 +155,19 @@ document.getElementById('projectSubmit').addEventListener('click', (event)=>{
     localStorage.setItem('projects', JSON.stringify(Project.projects));
     newProject(project);
     document.getElementById('projectName').value = "";
-   
+    if(screen.width<=710){
+    document.querySelector('.newProjectFormDiv').style.display = 'none';
+    document.querySelector('#mainSection').style.pointerEvents = 'auto';
+    document.getElementById('content-container').style.opacity = '1';}
+
   
 });
 //*******OPENS PROJECT SETTINGS*******/
 document.querySelectorAll('.projectEdit').forEach((element)=>{
 element.addEventListener('click', (event)=>{
-    projectSetting(event.target);  
+    
+    projectSetting(event.target);
+
 });
 
 });
@@ -163,7 +177,10 @@ document.querySelector('.content').addEventListener('click', (event)=>{
             document.querySelector('.projectSettings').addEventListener('click', (event)=>{
                 if(event.target.id === 'deletePrjBtn'){//DELETE PROJECT
                     const data = event.target.parentNode.getAttribute('data-pr');
+                    document.getElementById('projectSettings').remove();
+                    document.getElementById('content-container').style.opacity = '1';
                     deleteProject(data);
+                   
                 }
                 if(event.target.id === 'editPrjBtn'){//OPENS THE EDIT FORM
                     console.log(event.target);
@@ -230,7 +247,7 @@ document.querySelector('.content').addEventListener('click', (event)=>{
 
                 });}
         //CLOSE THE NEW PROJECT FORM
-            if(document.querySelector('.newProjectFormDiv').style.display === 'block'){
+            if(document.querySelector('.newProjectFormDiv')&&document.querySelector('.newProjectFormDiv').style.display === 'block'){
                 document.querySelector('#mainSection').style.pointerEvents = 'none'; //make tasks unclicable
                 if(!event.target.closest('.newProjectFormDiv') && 
                 !event.target.closest('.mAddPrjBtn')&& 
@@ -268,6 +285,7 @@ taskComplete(event.target);
 
     }
 });
+//*******MOBILE OPEN NEW PROJECT FORM*******
 document.getElementById('sidebar-container').addEventListener('click', (event)=>{
     if(event.target.classList.contains('mAddPrjBtn')|| event.target.classList.contains('mAddPrjBtnIcon')){
         console.log('clicked');
