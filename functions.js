@@ -34,7 +34,9 @@ function taskNumbers(project){
         const {tasksHTML, taskAddHtml}= displayContent(getIndex(lastProject));
         document.querySelector('#section-title').textContent = Project.projects[y].name;
         document.querySelector('#task-container').innerHTML = tasksHTML;
-        document.querySelector('#task-container').appendChild(taskAddHtml);
+        if(!document.querySelector('.taskAdd')){
+            document.querySelector('#content-container').appendChild(taskAddHtml);
+         }
     }
     function deleteTask(x, y){
         //x is the project index, y is the task index
