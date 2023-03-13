@@ -115,9 +115,9 @@ mainSection.appendChild(contentContainer);
 //******* FORM ADDING NEW TASK********
 const formDiv = document.createElement('div');
 const form = document.createElement('form');
-/* form.setAttribute('onsubmit', 'handleTaskSubmit(event)') */
 const formInputs = document.createElement('div');
 const formButtons = document.createElement('div');
+const formSelects = document.createElement('div');
 const taskName = document.createElement('textarea');
 taskName.classList.add('taskName');
 taskName.setAttribute('id', 'taskName');
@@ -127,8 +127,7 @@ taskDescription.setAttribute('id', 'taskDescription');
 const taskDueDate = document.createElement('input');
 taskDueDate.setAttribute('type', 'date');
 const taskPriority = document.createElement('select');
-/* const taskProject = document.createElement('select');
-taskProject.setAttribute('id', 'taskProject'); */
+
 const taskSubmit = document.createElement('button');
 const taskCancel = document.createElement('button');
 const taskP1 = document.createElement('option');
@@ -140,6 +139,7 @@ taskSubmit.setAttribute('id', 'formBtnAdd');
 taskSubmit.setAttribute('type', 'button');
 taskCancel.setAttribute('id', 'formBtnCancel');
 
+
 taskCancel.classList.add('formBtnCancel');
 taskDueDate.setAttribute('id', 'taskDueDate');
 taskPriority.setAttribute('id', 'taskPriority');
@@ -147,16 +147,18 @@ formDiv.classList.add('formDiv');
 form.setAttribute('id', 'task-form');
 formDiv.setAttribute('id', 'formDiv');
 formInputs.classList.add('taskContent');
+formSelects.setAttribute('id', 'formInputs');
 taskSubmit.textContent = 'O';
 taskCancel.textContent = 'X';
 taskP1.textContent = 'Low';
 taskP2.textContent = 'Medium';
 taskP3.textContent = 'High';
-taskName.placeholder = 'What do you need to do?';
+taskName.placeholder = 'Task Name';
 taskDescription.placeholder = 'Description';
 
 taskPriority.append(taskP1, taskP2, taskP3);
-formInputs.append(taskName, taskDescription, taskDueDate, taskPriority);
+formSelects.append(taskDueDate, taskPriority);
+formInputs.append(taskName, taskDescription, formSelects);
 formButtons.append(taskSubmit, taskCancel);
 form.append(formInputs, formButtons);
 formDiv.appendChild(form);
