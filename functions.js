@@ -53,7 +53,10 @@ function taskNumbers(project){
          
         const {tasksHTML, taskAddHtml}=displayContent(x);
         document.querySelector('#task-container').innerHTML = tasksHTML;
-        document.querySelector('#task-container').appendChild(taskAddHtml);}
+        if(!document.querySelector('.taskAdd') && document.getElementById('section-title').textContent==="Today"
+        && document.getElementById('section-title').textContent==="Upcoming" ){
+            document.querySelector('#content-container').appendChild(taskAddHtml);
+         }}
     }
     function localStorageUpdate(){
         localStorage.setItem('projects', JSON.stringify(Project.projects));
@@ -143,19 +146,21 @@ return todaysTasks;
 }
 function getUpcomingTasks(){
     const allTasks = getAllTasks();
-
+  
     const upcomingTasks = allTasks.filter((task) => {
         const dueDate = parse(task.dueDate, 'dd/MM/yyyy', new Date());
     
       if(isFuture(dueDate)){
-
         return task;
       }
       
     });
     upcomingTasks.sort((a, b) => {
-        return new Date(a.dueDate) - new Date(b.dueDate);
+        const [dayA, monthA, yearA] = a.dueDate.split('/');
+        const [dayB, monthB, yearB] = b.dueDate.split('/');
+        return new Date(`${monthA}/${dayA}/${yearA}`).getTime() - new Date(`${monthB}/${dayB}/${yearB}`).getTime();
     });
+
     return upcomingTasks;
 }
 function projectUpdate(e){
