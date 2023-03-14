@@ -1,7 +1,7 @@
-import { Todo, Project } from "../classes";
+import { Project } from "../classes";
 import { homeTab } from "../content";
-import { format, getDate } from "date-fns";
-import { handleTaskSubmit } from "../functions";
+import { format} from "date-fns";
+
 
 const date = new Date();
 const dateText = format(new Date(), "'Today is a' eeee");

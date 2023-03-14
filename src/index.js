@@ -1,9 +1,11 @@
-console.log("Working!");
+console.log(`Made with <3 by @phscloq`);
+console.log(`https://github.com/phscloq`);
+console.log(`phscloq@gmail.com`);
 import pageLoad from "./pageload";
 import './style.css'
 import { Todo, Project } from "../classes";
 import {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, projectEditCancel, projectUpdate} from "../functions";
-import { format, getDate } from "date-fns";
+import { format} from "date-fns";
 import {displayContent, homeTab, newProject, todayTab, upcomingTab, mobileAddPrj} from "../content";
 import {projectSetting, taskEdit, projectEdit, mobileNewProject} from "../opens";
 
@@ -11,10 +13,6 @@ pageLoad();
 const prList= document.getElementById('projects-list');
 
 
-console.log(format(new Date(), "'Today is a' eeee"));
-const date = new Date();
-const todays = format(date, "dd/MM/yyyy");
-console.log(todays);
 
 
 const home = document.getElementById('home');
@@ -22,46 +20,38 @@ const today = document.getElementById('today');
 const upcoming = document.getElementById('upcoming');
 const projectSection = document.getElementById('projectSectionTitle');
 const sectionTitle = document.getElementById('section-title');
-const openNewProjectForm = document.getElementsByClassName('mAddPrjBtn');
-if(screen.width <= 710){
-projectSection.addEventListener('click', () => {
+
+
     
+projectSection.addEventListener('click', () => {
+    if(screen.width <= 710){
     const computedStyle = getComputedStyle(prList);
     if(computedStyle.display === 'none'){
         prList.style.display = 'flex';
-        if(openNewProjectForm){console.log("button exists");
-    
-    }
         mobileAddPrj();
         
     }
     else if(computedStyle.display === 'flex'){
         document.querySelector('.mAddPrjBtn').remove();
-       
-        
         prList.style.display = 'none';
-       
-
         }
+    }
  });
-}
+
 
 
 
 
 home.addEventListener('click', () => {
-    console.log('home');
     sectionTitle.textContent = 'Home';
     homeTab();    
 });
 today.addEventListener('click', () => {
-    console.log('today');
     sectionTitle.textContent = 'Today';
     document.querySelector('#task-container').innerHTML ='';
     todayTab();
 });
 upcoming.addEventListener('click', () => {
-    console.log('upcoming');
     sectionTitle.textContent = 'Upcoming';
     document.querySelector('#task-container').innerHTML ='';   
     upcomingTab();
@@ -124,14 +114,11 @@ document.getElementById('formBtnCancel').addEventListener('click', (e) => {
                         const projectIndex = Project.projects.findIndex((project) => project.name === projectName);
                     
                         const task = new Todo(taskTitle, taskDescription, taskDueDate, taskPriority);
-                        console.log(task)
-                        console.log(task instanceof Todo);
                                         //resetting the form
                                         document.getElementById("taskName").value = "";
                                         document.getElementById("taskDueDate").value = "";
                                         document.getElementById("taskDescription").value = "";
 
-                        console.log(projectName);
                         task.project = Project.projects[projectIndex].id;
                         Project.projects[projectIndex].todos.push(task);
                         localStorage.setItem('projects', JSON.stringify(Project.projects));
@@ -183,8 +170,6 @@ document.querySelector('.content').addEventListener('click', (event)=>{
                    
                 }
                 if(event.target.id === 'editPrjBtn'){//OPENS THE EDIT FORM
-                    console.log(event.target);
-                    console.log('clicked');
                     projectEdit(event.target);
                 }
             });}
@@ -234,7 +219,6 @@ document.querySelector('.content').addEventListener('click', (event)=>{
             if(document.getElementById('projectEditDiv')){
                 document.querySelector('.projectEditDiv').addEventListener('click', (event)=>{
                     if(event.target.id === 'rename'){
-                        console.log("rename");
                         projectUpdate(event.target);
                         document.getElementById('content-container').style.opacity = '1';
                         document.querySelector('#mainSection').style.pointerEvents = 'auto';
@@ -252,7 +236,6 @@ document.querySelector('.content').addEventListener('click', (event)=>{
                 if(!event.target.closest('.newProjectFormDiv') && 
                 !event.target.closest('.mAddPrjBtn')&& 
                 !event.target.closest('.mAddPrjBtnIcon') && !event.target.closest('.newProjectForm')){
-                console.log('clicked outside');
                 document.querySelector('.newProjectFormDiv').style.display = 'none';
                 document.getElementById('content-container').style.opacity = '1';
                 document.querySelector('#mainSection').style.pointerEvents = 'auto';
@@ -266,7 +249,6 @@ document.getElementById('task-container').addEventListener('click', (event)=>{
      
         const data = event.target.parentNode.parentNode.parentNode.id;
         const projectName = event.target.parentNode.parentNode.parentNode.getAttribute('data-project');
-        console.log(event.target.parentNode.parentNode.parentNode);
         const {projectIndex, taskIndex} = getIndex(projectName, data);
         deleteTask(projectIndex, taskIndex);
     }
@@ -279,15 +261,12 @@ taskComplete(event.target);
         if(document.querySelector('.taskEdit')){
         document.querySelector('.taskEdit').remove();}
                //get data-project
-               console.log("Looking for data-project");
-               console.log(event.target.parentNode.parentNode.parentNode.getAttribute('data-project'));
-        taskEdit(event.target);
+                taskEdit(event.target);
 
     }
 });
 //*******MOBILE OPEN NEW PROJECT FORM*******
 document.getElementById('sidebar-container').addEventListener('click', (event)=>{
     if(event.target.classList.contains('mAddPrjBtn')|| event.target.classList.contains('mAddPrjBtnIcon')){
-        console.log('clicked');
         mobileNewProject();
     }});

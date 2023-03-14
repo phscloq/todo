@@ -1,4 +1,4 @@
-import { Todo, Project } from "./classes";
+import {Project } from "./classes";
 import { projectSetting } from "./opens";
 import { getIndex, sorting, sortByComplete, getTodaysTasks, getUpcomingTasks } from "./functions";
 
@@ -62,7 +62,7 @@ function homeTab(){
   if(document.querySelector('.taskAdd')){
     document.querySelector('.taskAdd').remove();}
     document.querySelector('#task-container').innerHTML = '';
-    console.log("Home Tab");
+
     const allTaskArr = [];
     for (let j=0; j < Project.projects.length; j++){
       allTaskArr.push(...Project.projects[j].todos);
@@ -119,7 +119,7 @@ function todayTab(){
   if(document.querySelector('.taskAdd')){
     document.querySelector('.taskAdd').remove();}
 const todaysTasks = getTodaysTasks();
-console.log(todaysTasks);
+
 const tasksHTML = todaysTasks.map((todo, index) => {
     
   const taskPriority = todo.priority;

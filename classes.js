@@ -1,6 +1,5 @@
 //creating todo model
 import { displayProject } from "./content";
-import { turnObjectToTodo } from "./functions";
 class Todo {
     constructor(title, description, dueDate, priority) {
         this.title = title;
@@ -68,7 +67,7 @@ project3.todos[0].project=project3.id;
 project3.todos[1].project=project3.id;
 project3.todos[2].project=project3.id;
 
-console.log(Project.projects);
-/* Project.getProjects(); */
+
+
 
 export  { Todo, Project};

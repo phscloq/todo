@@ -1,5 +1,5 @@
 //Description: This file contains the functions that are used to create/OPEN the forms for adding new tasks and projects and form to edit them.
-import { getIndex } from "./functions";
+import { getIndex, textareaAdjust } from "./functions";
 import { Project } from "./classes";
 import {format, parse} from "date-fns";
 function projectSetting(e){//onclick event for settingsBtn (...) for Project
@@ -21,23 +21,18 @@ function projectSetting(e){//onclick event for settingsBtn (...) for Project
             else if(e.classList.contains('settingsBtn')){
                 
                 if(computedStyle.display === 'flex'){
-                        console.log(computedStyle.display);
                         e.parentNode.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
-                        console.log(e.parentNode.parentNode.parentNode.parentNode);
                 }
         else{e.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);}}
             document.getElementById('projectSettings').classList.add('center');
         }
 function projectEdit(e){
-        console.log('project edit called');
         const prList= document.getElementById('projects-list');
        
         const computedStyle = getComputedStyle(prList);
-        console.log(e);
         const projectData = e.parentNode.getAttribute('data-pr');
         const pX = Project.projects.findIndex((project)=> project.id === projectData);
         const projectName = Project.projects[pX].name;
-        console.log(projectName);
         const editDiv = `<div class="projectEditDiv" id="projectEditDiv" data=${projectData}>
         <form  id="projectEditForm"><input type="text" id="projectEditTitle" value="${projectName}">
         <div class="projectEditBtns" id="projectEditBtns"> 
@@ -47,8 +42,6 @@ function projectEdit(e){
  
        
         if(computedStyle.display === 'flex'){//checking if it is in mobile view
-                 console.log(e);
-          
                 e.parentNode.parentNode.parentNode.parentNode.insertAdjacentHTML('beforeend', editDiv);
                 document.getElementById('projectSettings').remove();
             
@@ -59,43 +52,50 @@ function projectEdit(e){
         }
         document.getElementById('projectEditDiv').classList.add('center');
 }
+
 function taskEdit(e){//onclick event for editTaskBtn
 
         const taskId = e.parentNode.parentNode.parentNode.id;
-        console.log(taskId);
+        
         const projectName = e.parentNode.parentNode.parentNode.getAttribute('data-project');
         const {projectIndex, taskIndex }= getIndex(projectName, taskId);
        
         
       const theDate = parse(Project.projects[projectIndex].todos[taskIndex].dueDate, 'dd/MM/yyyy', new Date());
       const dueDate = format(theDate, 'yyyy-MM-dd');
-        /* console.log(format(theDate, 'yyyy-MM-dd')); */
         const editDiv=`<div class=taskEdit id=taskEdit data=${Project.projects[projectIndex].todos[taskIndex].id} data-project=${projectName}>
         <form action="" id="taskEditForm">
         <div class="taskEditTitle"><input type="text" id="taskEditTitle" value=${Project.projects[projectIndex].todos[taskIndex].title}></div>
-        <div class="taskEditDesc"><textarea id="taskEditDesc" cols="30" rows="10">${Project.projects[projectIndex].todos[taskIndex].description}</textarea></div>
+        <div class="taskEditBottom">
+        <div class="taskEditDesc"><textarea id="taskEditDesc" rows="1">${Project.projects[projectIndex].todos[taskIndex].description}</textarea></div>
+        <div class="taskEditInputs">
         <div class="taskEditDueDate"><input type="date" id="taskEditDueDate" value=${dueDate}></div>
         <div class="taskEditPriority"><select id="taskEditPriority">
         <option value="Low">Low</option>
         <option value="Medium">Medium</option>
         <option value="High">High</option>      
-        </select></div></form>
+        </select></div>
+        </div>
+        </div></form>
         </div>`;
- 
         
-        console.log("Priority:");
-
-        console.log(e);
         //append it to body
         const content = document.querySelector('.content');
         content.insertAdjacentHTML('beforeend', editDiv);
-        console.log(Project.projects[projectIndex].todos[taskIndex].priority);
+        //textarea adjust
+        const textarea = document.getElementById('taskEditDesc');
+        textarea.addEventListener('input', function() {
+         textareaAdjust(textarea);
+                });
+
+
+        //focus on the title input
+        document.getElementById('taskEditTitle').focus();
         document.getElementById('taskEditPriority').value = Project.projects[projectIndex].todos[taskIndex].priority;
-        
+     
          
         }
 function mobileNewProject(){
-        console.log("mobileNewProject called");
         document.querySelector('.newProjectFormDiv').style.display = 'block';
         document.getElementById('content-container').style.opacity = '0.5';
 }
