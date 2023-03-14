@@ -1,4 +1,4 @@
-import { Todo, Project } from "./classes";
+import {Project } from "./classes";
 import { displayContent } from "./content";
 import { homeTab } from "./content";
 import { format, isFuture, parse } from "date-fns";
@@ -12,24 +12,14 @@ function taskNumbers(project){
     }
     
     function deleteProject(project){
-  
         const index = Project.projects.findIndex(x => x.id == project);
-        
         Project.projects.splice(index, 1);
-        console.log(Project.projects);
         localStorageUpdate();
-        console.log(project);
-       /*  console.log(document.querySelector(`[data='${project}']`)); */
         document.querySelector(`[data='${project}']`).remove();
-   
-        console.log("This is index:");
-        console.log(index);
         let y=index;
         if(index!=0){
         y=index-1;
         } 
-        console.log("This is y:");
-        console.log(y);
         const lastProject = Project.projects[y].id;
         const {tasksHTML, taskAddHtml}= displayContent(getIndex(lastProject));
         document.querySelector('#section-title').textContent = Project.projects[y].name;
@@ -44,9 +34,7 @@ function taskNumbers(project){
             Project.projects[x].completedTasks--;
         }
         Project.projects[x].todos.splice(y, 1);
-        console.log(Project.projects);
         localStorageUpdate();
-        
         taskNumbers(Project.projects[x]);
         if(document.getElementById('section-title').textContent === 'Home'){homeTab();}
         else{
@@ -63,16 +51,14 @@ function taskNumbers(project){
     }
     
 function taskComplete(e){
-console.log(e);
+
 //code for changing style of e
 const pName = e.getAttribute('data-project');
 const tId = e.id;
 const {projectIndex, taskIndex} = getIndex(pName, tId);
-console.log(Project.projects[projectIndex].todos[taskIndex] instanceof Todo);
 if(!e.classList.contains('taskComplete')){
     Project.projects[projectIndex].todos[taskIndex].completed=true;
     Project.projects[projectIndex].completedTasks++;
-    console.log(Project.projects[projectIndex].completedTasks);
 e.classList.add('taskComplete');}
 else{
     Project.projects[projectIndex].todos[taskIndex].completed=false;
@@ -93,15 +79,6 @@ function getIndex (project, task){
     return {projectIndex, taskIndex};
     }else{return projectIndex};
    
-}
-function turnObjectToTodo(object){
-    console.log("turning object to todo");
-    console.log(object);
-    const task = new Todo();
-  Object.assign(task, object);
-  console.log(task);
-  localStorageUpdate();
-  return task;
 }
 function sorting(projectIndex){
 
@@ -142,10 +119,14 @@ todaysTasks.sort((a, b) => {
     const priorityOrder = ['High', 'Medium', 'Low'];
     return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
 });
+todaysTasks.sort((a, b) => {
+    return a.completed - b.completed;
+});
 return todaysTasks;
 }
 function getUpcomingTasks(){
     const allTasks = getAllTasks();
+
   
     const upcomingTasks = allTasks.filter((task) => {
         const dueDate = parse(task.dueDate, 'dd/MM/yyyy', new Date());
@@ -160,11 +141,13 @@ function getUpcomingTasks(){
         const [dayB, monthB, yearB] = b.dueDate.split('/');
         return new Date(`${monthA}/${dayA}/${yearA}`).getTime() - new Date(`${monthB}/${dayB}/${yearB}`).getTime();
     });
-
+    upcomingTasks.sort((a, b) => {
+        return a.completed - b.completed;
+    });
     return upcomingTasks;
 }
 function projectUpdate(e){
-    console.log("projectUpdate called")
+    
 const projectData = e.parentNode.parentNode.parentNode.getAttribute('data');
 const projectX = Project.projects.findIndex(x => x.id == projectData);
 const projectNewName = e.parentNode.parentNode.childNodes[0].value;
@@ -175,9 +158,6 @@ const {tasksHTML, taskAddHtml}= displayContent(projectX);
 document.querySelector('#section-title').textContent = Project.projects[projectX].name;
 document.querySelector('#task-container').innerHTML = tasksHTML;
 document.querySelector('#task-container').appendChild(taskAddHtml);
-/* const projectHTML = `<li class="project" id="${project.name}" data="${project.id}">${project.name}<div class="projectEdit" id="projectEdit">
-<button class="settingsBtn" id="settingsBtn"><span class="editTxt">...</span></button></div><div class="taskNumbers" id="taskNumbers">
-<div class="completed" id="completed">0/</div><div class="totalTasks" id="totalTasks">${project.todos.length}</div></div></li>`; */
 e.parentNode.parentNode.parentNode.remove();
 
 document.querySelector(`[data='${projectData}']`).id = projectNewName;
@@ -189,4 +169,13 @@ function projectEditCancel(e){
   e.parentNode.parentNode.parentNode.remove();
   document.querySelector(`[data='${projectData}']`).style.display = 'flex';
 }
-export {taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, turnObjectToTodo, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks, projectUpdate, projectEditCancel, sortByComplete};
+function textareaAdjust(o) {
+  
+   o.style.height ="1px"
+   o.style.height = (o.scrollHeight)+"px";
+    if(o.style.height==="160px"){
+        o.style.overflowY="scroll";
+    }
+
+  }
+export {textareaAdjust, taskNumbers, deleteProject, deleteTask, taskComplete, getIndex, sorting, getAllTasks, getTodaysTasks, getUpcomingTasks, projectUpdate, projectEditCancel, sortByComplete};
