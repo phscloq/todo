@@ -374,6 +374,7 @@ body{
                 .newProjectForm{
                     display: flex;
                     flex-direction: column;
+                    padding-right: 21px;
                 }
                 .projectFrmBtns{
                     align-self: center;
