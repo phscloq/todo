@@ -76,7 +76,7 @@ const projectName = document.createElement('input');
 const projectFrmBtns = document.createElement('div');
 const projectSubmit = document.createElement('button');
 projectSubmit.textContent = 'Add';
-projectName.setAttribute('placeholder', 'New Project Name');
+projectName.setAttribute('placeholder', 'Project Title');
 projectSubmit.setAttribute('id', 'projectSubmit');
 newProjectFormDiv.classList.add('newProjectFormDiv');
 newProjectFormDiv.classList.add('center');
